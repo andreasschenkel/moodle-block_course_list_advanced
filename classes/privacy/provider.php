@@ -22,7 +22,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace block_course_list_new\privacy;
+namespace block_course_list_advanced\privacy;
 
 defined('MOODLE_INTERNAL') || die();
 
