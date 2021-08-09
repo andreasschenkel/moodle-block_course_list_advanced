@@ -26,7 +26,7 @@ include_once($CFG->dirroot . '/course/lib.php');
 
 class block_course_list_advanced extends block_list {
     function init() {
-        $this->title = get_string('pluginname', 'block_course_list');
+        $this->title = get_string('pluginname', 'block_course_list_advanced');
     }
 
     function has_config() {
@@ -59,11 +59,12 @@ class block_course_list_advanced extends block_list {
             || empty($CFG->block_course_list_hideallcourseslink)) &&
             core_course_category::user_top();
 
-        $additionalInformation=" ";
+
         if (empty($CFG->disablemycourses) and isloggedin() and !isguestuser() and
           !(has_capability('moodle/course:update', context_system::instance()) and $adminseesall)) {    // Just print My Courses
             if ($courses = enrol_get_my_courses()) {
                 foreach ($courses as $course) {
+                    $additionalInformation="";
                     $coursecontext = context_course::instance($course->id);
                     $linkcss = $course->visible ? "" : " class=\"dimmed\" ";
 
