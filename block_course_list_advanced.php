@@ -15,10 +15,11 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Course list block new.
+ * Course list advanced block.
  *
  * @package    block_course_list_advanced
  * @copyright  1999 onwards Martin Dougiamas (http://dougiamas.com)
+ * @author     Andreas Schenkel - Schulportal Hessen
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -59,39 +60,52 @@ class block_course_list_advanced extends block_list {
             || empty($CFG->block_course_list_hideallcourseslink)) &&
             core_course_category::user_top();
 
-
+        $countCoursesWithTrainer = 0 ;
+        $countCoursesWithStudent = 0 ;
         if (empty($CFG->disablemycourses) and isloggedin() and !isguestuser() and
           !(has_capability('moodle/course:update', context_system::instance()) and $adminseesall)) {    // Just print My Courses
             if ($courses = enrol_get_my_courses()) {
                 foreach ($courses as $course) {
-                    $additionalInformation="";
                     $coursecontext = context_course::instance($course->id);
                     $linkcss = $course->visible ? "" : " class=\"dimmed\" ";
 
-                    $coursenumber = $course->id;
-                    //  $coursecontext = context_course::instance($coursenumber);
+                    /**
+                     * getting all users with moodle/course:manageactivities. This should be all user with role teacher (without noneditingteacher)
+                     * @todo implement better way to find role of the user in the course
+                     */
                     $editingteachers = get_users_by_capability($coursecontext, 'moodle/course:manageactivities');
 
-
-                    $trainer=false;
+                    $userIsInEditingTeachersList = false;
                     foreach ($editingteachers as $teacher) {
-                       if ($USER->username==$teacher->username) {
-                          $trainer=true;
+                       if ($USER->username === $teacher->username) {
+                          $userIsInEditingTeachersList = true;
+                          /**
+                           * @todo add break because user has the capability
+                           */
                        } else {
-                          // weitere Trainer im Kurs
+                          // this teacher is not the $USER but has the capability moodle/course:manageactivities
                        }
                     }
+
 
                     $htmllinktocourse="<a $linkcss title=\"" . format_string($course->shortname, true, array('context' => $coursecontext)) . "\" ".
                                       "href=\"$CFG->wwwroot/course/view.php?id=$course->id\">".$icon.format_string(get_course_display_name_for_list($course)). "</a> ";
 
-                    if ( $trainer==true) {
-                      $additionalInformation=" id=" . $coursenumber . " <b style='color:red;'>Trainer</b>";
-                      $listalltrainercourses=$listalltrainercourses.$htmllinktocourse."<br />  ";
-                      $trainerexists=true;
+                    if ( $userIsInEditingTeachersList ) {
+                      /**
+                       * @todo maybe it is a user with role noneditingteacher and we need to show courses with this role
+                       */
+                      $listAllTrainerCourses = $listAllTrainerCourses . $htmllinktocourse . "<br />  ";
+                      $countCoursesWithTrainer++;
+                    } else {
+                      /**
+                       * User withour has_capability moodle/course:manageactivities, so student or noneditingteacher (other roles are possible)
+                       * @todo maybe it is a user with role noneditingteacher and we need to show courses with this role
+                       */
+                      $listAllStudentCourses = $listAllStudentCourses . $htmllinktocourse . "<br />  ";
+                      $countCoursesWithStudent++;
                     }
-
-                    $this->content->items[]=  $htmllinktocourse." ".$additionalInformation;
+                    ////$this->content->items[ ]=  $htmllinktocourse . ' '  . $additionalInformation;
 
                 }
                 $this->title = get_string('mycourses');
@@ -100,11 +114,20 @@ class block_course_list_advanced extends block_list {
                     $this->content->footer = "<a href=\"$CFG->wwwroot/course/index.php\">".get_string("fulllistofcourses")."</a> ...";
                 }
             }
-            if ($trainerexists)
+            if ( $countCoursesWithTrainer )
             {
-                $this->content->items[]="<br /><b>Übersicht über alle Kurse als Trainer</b><br />";
-                $this->content->items[]=$listalltrainercourses . '<br />';
+                $this->content->items[] = '<div class="course_list_advanced">' .  $countCoursesWithTrainer . ' ' . get_string('headlineteacher', 'block_course_list_advanced') . '</div>';
+                $this->content->items[] = $listAllTrainerCourses . '<br />';
             }
+            if ( $countCoursesWithStudent )
+            {
+                $this->content->items[] = '<div class="course_list_advanced">' .  $countCoursesWithStudent . ' ' . get_string('headlinestudent', 'block_course_list_advanced') . '</div>';
+                $this->content->items[] = $listAllStudentCourses . '<br />';
+            }
+
+
+
+
             $this->get_remote_courses();
             if ($this->content->items) { // make sure we don't return an empty list
               return $this->content;

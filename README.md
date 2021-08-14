@@ -7,22 +7,13 @@ The block moodle-block_course_list_advanced adds after a course the information 
 
 At the end of the block a list of all courses is shown where the usere is enrolled as teacher.
 
-
-
 # ToDo #
-- beautify code
-- add languagestrings instead of hard coded strings
-- find and implement an alternative to $editingteachers = get_users_by_capability($coursecontext, 'moodle/course:manageactivities');   <--
-- add a list of courses enrolled with the role "student"
-- add a list of courses enrolled with the role "guest"
-- block may be "expensive" in large moodleinstances with many users. 
-  instead of using a block it might be a good idea to implement the functionality as a part of the profile-page
-- 
-
+block may be "expensive" in large moodleinstances with many users. instead of using a block it might be a good idea to implement the functionality as a part of the profile-page
 
 # Changelog #
 
+## [[v0.8]] ##
+beta-version for testing
+
 ## [[inital commit]] ##
 initial commit on master-branch developed on moodle 3.9.9 
-
-

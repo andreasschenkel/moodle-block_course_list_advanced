@@ -15,10 +15,11 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Course list block caps.
+ * Course list advanced block caps.
  *
  * @package    block_course_list_advanced
- * @copyright  Mark Nelson <markn@moodle.com>
+ * @copyright  1999 onwards Martin Dougiamas (http://dougiamas.com)
+ * @author     Andreas Schenkel - Schulportal Hessen
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 

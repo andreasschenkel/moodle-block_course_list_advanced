@@ -15,10 +15,11 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Privacy Subsystem implementation for block_course_list.
+ * Privacy Subsystem implementation for block_course_list_advanced.
  *
- * @package    block_course_list
- * @copyright  2018 Zig Tan <zig@moodle.com>
+ * @package    block_course_list_advanced
+ * @copyright  1999 onwards Martin Dougiamas (http://dougiamas.com)
+ * @author     Andreas Schenkel - Schulportal Hessen
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 

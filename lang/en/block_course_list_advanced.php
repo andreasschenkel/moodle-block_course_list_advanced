@@ -15,20 +15,23 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Strings for component 'block_course_list', language 'en', branch 'MOODLE_20_STABLE'
+ * Strings for component 'block_course_list_advanced', language 'en', branch 'MOODLE_39_STABLE'
  *
- * @package   block_course_list
- * @copyright 1999 onwards Martin Dougiamas  {@link http://moodle.com}
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package    block_course_list_advanced
+ * @copyright  1999 onwards Martin Dougiamas (http://dougiamas.com)
+ * @author     Andreas Schenkel - Schulportal Hessen
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-$string['adminview'] = 'Admin view - new';
-$string['allcourses'] = 'Admin user sees all courses - new';
-$string['configadminview'] = 'Whether to display all courses in the Courses block, or only courses that the admin is enrolled in. - new';
-$string['confighideallcourseslink'] = 'Remove the \'All courses\' link under the list of courses. (This setting does not affect the admin view. - new)';
-$string['course_list_advanced:addinstance'] = 'Add a new courses block - new';
-$string['course_list_advanced:myaddinstance'] = 'Add a new courses block to Dashboard - new';
+$string['adminview'] = 'Admin view';
+$string['allcourses'] = 'Admin user sees all courses';
+$string['configadminview'] = 'Whether to display all courses in the Courses advanced block, or only courses that the admin is enrolled in.';
+$string['confighideallcourseslink'] = 'Remove the \'All courses\' link under the list of courses. (This setting does not affect the admin view.)';
+$string['course_list_advanced:addinstance'] = 'Add a new courses block';
+$string['course_list_advanced:myaddinstance'] = 'Add a new courses block to Dashboard';
 $string['hideallcourseslink'] = 'Hide \'All courses\' link';
-$string['owncourses'] = 'Admin user sees own courses - new';
+$string['owncourses'] = 'Admin user sees own courses';
 $string['pluginname'] = 'Courses advanced';
-$string['privacy:metadata'] = 'The Courses block only shows data about courses and does not store any data itself. - new';
+$string['privacy:metadata'] = 'The Courses block only shows data about courses and does not store any data itself.';
+$string['headlineteacher'] = 'Courses with cabability moodle/course:manageactivities';
+$string['headlinestudent'] = 'übersetzen Kurs(e) ohne Bearbeitungsrechte';
