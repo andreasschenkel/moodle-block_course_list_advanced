@@ -5,3 +5,11 @@
 .block_course_list_advanced .content li {
     margin-bottom: .3em;
 }
+
+.course_list_advanced{
+    //font-weight: bold;
+}
+
+.course_list_advanced.additionalInformation{
+    color: blue;
+}

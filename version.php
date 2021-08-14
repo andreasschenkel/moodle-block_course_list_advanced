@@ -17,13 +17,14 @@
 /**
  * Version details
  *
- * @package    block_course_list_new
+ * @package    block_course_list_advanced
  * @copyright  1999 onwards Martin Dougiamas (http://dougiamas.com)
+ * @author     Andreas Schenkel - Schulportal Hessen
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2020061500;        // The current plugin version (Date: YYYYMMDDXX)
+$plugin->version   = 2021081400;        // The current plugin version (Date: YYYYMMDDXX)
 $plugin->requires  = 2020060900;        // Requires this Moodle version
 $plugin->component = 'block_course_list_advanced'; // Full name of the plugin (used for diagnostics)
