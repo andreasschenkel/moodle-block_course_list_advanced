@@ -23,7 +23,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-$string['adminview'] = 'Admin view - new';
+$string['adminview'] = 'Adminansicht';
 $string['allcourses'] = 'Administrator:innen sehen alle Kurse';
 $string['configadminview'] = 'Alle Kurse anzeigen oder nur Kurse, in die Administratorin oder Administatorin mit einer Rolle eingeschrieben ist.';
 $string['confighideallcourseslink'] = 'Entferne den \'Alle Kurse\' Link unter der Liste aller Kurse. Einstellung beeinflusst nicht die Anzeoge für Admins.)';
@@ -33,5 +33,6 @@ $string['hideallcourseslink'] = 'Verberge \'Alle Kurse\' Link';
 $string['owncourses'] = 'Admin sieht eigene Kurse';
 $string['pluginname'] = 'Kursliste erweitert';
 $string['privacy:metadata'] = 'Der Block Kursliste erweitert zeigt nur Daten über Kurse an und speichert keine Daten.';
-$string['headlineteacher'] = 'Kurs(e) mit manageactivities';
-$string['headlinestudent'] = 'Kurs(e) ohne Bearbeitungsrechte <br />(Trainer o. Bearbeitungsrecht, Teilnehmer, ...)';
+$string['headlineteacher'] = '<b>Kurs(e) - Trainer</b>';
+$string['headlinestudent'] = '<b>Kurs(e) - Teilnehmer</b>';
+$string['headlinenoneditingteacher'] = '<b>Kurs(e) - Trainer o Bearbeitung</b>';
