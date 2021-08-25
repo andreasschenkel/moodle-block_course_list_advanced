@@ -74,37 +74,52 @@ class block_course_list_advanced extends block_list {
                      * @todo implement better way to find role of the user in the course
                      */
                     $editingteachers = get_users_by_capability($coursecontext, 'moodle/course:manageactivities');
-
-                    $userIsInEditingTeachersList = false;
+                    $isEditingTeacher = false;
+                    $roles = '';
                     foreach ($editingteachers as $teacher) {
                        if ($USER->username === $teacher->username) {
-                          $userIsInEditingTeachersList = true;
-                          /**
-                           * @todo add break because user has the capability
-                           */
-                       } else {
-                          // this teacher is not the $USER but has the capability moodle/course:manageactivities
+                          $isEditingTeacher = true;
+                          $roles = $roles . ' - <font color="red">T</font>';
+                          break;
                        }
+                    }
+
+                    /**
+                     * now proof if user is student
+                     */
+                    $isStudent = false;
+                    if (is_enrolled($coursecontext, $USER , 'mod/quiz:reviewmyattempts', $onlyactive = false)) {
+                      $isStudent = true;
+                      $roles = $roles . ' - <font color="blue">S</font>';
+                    }
+
+                    /**
+                     * now proof if user is isNoneditingTeacher
+                     */
+                    $isNoneditingTeacher = false;
+                    if (  !is_enrolled($coursecontext, $USER , 'moodle/course:changecategory', $onlyactive = false) &&  is_enrolled($coursecontext, $USER , 'moodle/course:markcomplete', $onlyactive = false)    ) {
+                      $isNoneditingTeacher = true;
+                      $roles = $roles . ' - <font color="green">NonEditingTeacher</font>';
                     }
 
 
                     $htmllinktocourse="<a $linkcss title=\"" . format_string($course->shortname, true, array('context' => $coursecontext)) . "\" ".
-                                      "href=\"$CFG->wwwroot/course/view.php?id=$course->id\">".$icon.format_string(get_course_display_name_for_list($course)). "</a> ";
+                                      "href=\"$CFG->wwwroot/course/view.php?id=$course->id\">".$icon.format_string(get_course_display_name_for_list($course)).$dummy. "</a> ";
 
-                    if ( $userIsInEditingTeachersList ) {
-                      /**
-                       * @todo maybe it is a user with role noneditingteacher and we need to show courses with this role
-                       */
-                      $listAllTrainerCourses = $listAllTrainerCourses . $htmllinktocourse . "<br />  ";
+                    if ( $isEditingTeacher ) {
+                      $listAllTrainerCourses = $listAllTrainerCourses . $htmllinktocourse .  '  ' . $roles . '<br /> ';
                       $countCoursesWithTrainer++;
-                    } else {
-                      /**
-                       * User withour has_capability moodle/course:manageactivities, so student or noneditingteacher (other roles are possible)
-                       * @todo maybe it is a user with role noneditingteacher and we need to show courses with this role
-                       */
-                      $listAllStudentCourses = $listAllStudentCourses . $htmllinktocourse . "<br />  ";
+                    }
+                    if ( $isStudent ){
+                      $listAllStudentCourses = $listAllStudentCourses . $htmllinktocourse .  '  ' . $roles . '<br /> ';
                       $countCoursesWithStudent++;
                     }
+                    if ( $isNoneditingTeacher ){
+                      $listAllNoneditingTeacherCourses = $listAllNoneditingTeacherCourses . $htmllinktocourse .  '  ' . $roles . '<br /> ';
+                      $countCoursesWithNoneditingTeacher++;
+                    }
+
+                    //}
                     ////$this->content->items[ ]=  $htmllinktocourse . ' '  . $additionalInformation;
 
                 }
@@ -124,7 +139,11 @@ class block_course_list_advanced extends block_list {
                 $this->content->items[] = '<div class="course_list_advanced">' .  $countCoursesWithStudent . ' ' . get_string('headlinestudent', 'block_course_list_advanced') . '</div>';
                 $this->content->items[] = $listAllStudentCourses . '<br />';
             }
-
+            if ( $countCoursesWithNoneditingTeacher )
+            {
+                $this->content->items[] = '<div class="course_list_advanced">' .  $countCoursesWithNoneditingTeacher . ' ' . get_string('headlinenoneditingteacher', 'block_course_list_advanced') . '</div>';
+                $this->content->items[] = $listAllNoneditingTeacherCourses . '<br />';
+            }
 
 
 
