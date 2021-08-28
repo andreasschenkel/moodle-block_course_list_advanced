@@ -13,3 +13,7 @@
 .course_list_advanced.additionalInformation{
     color: blue;
 }
+
+.tooltip > .tooltip-inner {
+    background-color: #39f;
+}
