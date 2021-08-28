@@ -25,19 +25,23 @@
 
 include_once($CFG->dirroot . '/course/lib.php');
 
-class block_course_list_advanced extends block_list {
-    function init() {
+class block_course_list_advanced extends block_list
+{
+    function init()
+    {
         $this->title = get_string('pluginname', 'block_course_list_advanced');
     }
 
-    function has_config() {
+    function has_config()
+    {
         return true;
     }
 
-    function get_content() {
+    function get_content()
+    {
         global $CFG, $USER, $DB, $OUTPUT;
 
-        if($this->content !== NULL) {
+        if ($this->content !== NULL) {
             return $this->content;
         }
 
@@ -50,20 +54,23 @@ class block_course_list_advanced extends block_list {
 
         $adminseesall = true;
         if (isset($CFG->block_course_list_advanced_adminview)) {
-           if ( $CFG->block_course_list_advanced_adminview == 'own'){
-               $adminseesall = false;
-           }
+            if ($CFG->block_course_list_advanced_adminview == 'own') {
+                $adminseesall = false;
+            }
         }
 
         $allcourselink =
             (has_capability('moodle/course:update', context_system::instance())
-            || empty($CFG->block_course_list_hideallcourseslink)) &&
+                || empty($CFG->block_course_list_hideallcourseslink)) &&
             core_course_category::user_top();
 
-        $countCoursesWithTrainer = 0 ;
-        $countCoursesWithStudent = 0 ;
-        if (empty($CFG->disablemycourses) and isloggedin() and !isguestuser() and
-          !(has_capability('moodle/course:update', context_system::instance()) and $adminseesall)) {    // Just print My Courses
+        $countCoursesWithTrainer = 0;
+        $countCoursesWithStudent = 0;
+        if (
+            empty($CFG->disablemycourses) and isloggedin() and !isguestuser() and
+            !(has_capability('moodle/course:update', context_system::instance()) and $adminseesall)
+        ) {
+            // Just print My Courses
             if ($courses = enrol_get_my_courses()) {
                 foreach ($courses as $course) {
                     $coursecontext = context_course::instance($course->id);
@@ -77,46 +84,51 @@ class block_course_list_advanced extends block_list {
                     $isEditingTeacher = false;
                     $roles = '';
                     foreach ($editingteachers as $teacher) {
-                       if ($USER->username === $teacher->username) {
-                          $isEditingTeacher = true;
-                          $roles = $roles . ' - <font color="red">T</font>';
-                          break;
-                       }
+                        if ($USER->username === $teacher->username) {
+                            $isEditingTeacher = true;
+                            $roles = $roles 
+                            . ' <i class="text-info" 
+                                data-toggle="tooltip" 
+                                data-placement="right" 
+                                title="Trainer: capability moodle/course:manageactivities" >
+                                <font color="red">T</font></i>';
+                            break;
+                        }
                     }
 
                     /**
                      * now proof if user is student
                      */
                     $isStudent = false;
-                    if (is_enrolled($coursecontext, $USER , 'mod/quiz:reviewmyattempts', $onlyactive = false)) {
-                      $isStudent = true;
-                      $roles = $roles . ' - <font color="blue">S</font>';
+                    if (is_enrolled($coursecontext, $USER, 'mod/quiz:reviewmyattempts', $onlyactive = false)) {
+                        $isStudent = true;
+                        $roles = $roles . ' <i class="text-info" data-toggle="tooltip" data-placement="right" title="Schüler:in (reviewmyattempts)" ><font color="blue">S</font></i>';
                     }
 
                     /**
                      * now proof if user is isNoneditingTeacher
                      */
                     $isNoneditingTeacher = false;
-                    if (  !is_enrolled($coursecontext, $USER , 'moodle/course:changecategory', $onlyactive = false) &&  is_enrolled($coursecontext, $USER , 'moodle/course:markcomplete', $onlyactive = false)    ) {
-                      $isNoneditingTeacher = true;
-                      $roles = $roles . ' - <font color="green">NonEditingTeacher</font>';
+                    if (!is_enrolled($coursecontext, $USER, 'moodle/course:changecategory', $onlyactive = false) &&  is_enrolled($coursecontext, $USER, 'moodle/course:markcomplete', $onlyactive = false)) {
+                        $isNoneditingTeacher = true;
+                        $roles = $roles . '  <i class="text-info" data-toggle="tooltip" data-placement="right" title="nonediting Teacher (changecategory)" ><font color="green">T</font></i>';
                     }
 
 
-                    $htmllinktocourse="<a $linkcss title=\"" . format_string($course->shortname, true, array('context' => $coursecontext)) . "\" ".
-                                      "href=\"$CFG->wwwroot/course/view.php?id=$course->id\">".$icon.format_string(get_course_display_name_for_list($course)).$dummy. "</a> ";
+                    $htmllinktocourse = "<a $linkcss title=\"" . format_string($course->shortname, true, array('context' => $coursecontext)) . "\" " .
+                        "href=\"$CFG->wwwroot/course/view.php?id=$course->id\">" . $icon . format_string(get_course_display_name_for_list($course)) . $dummy . "</a> ";
 
-                    if ( $isEditingTeacher ) {
-                      $listAllTrainerCourses = $listAllTrainerCourses . $htmllinktocourse .  '  ' . $roles . '<br /> ';
-                      $countCoursesWithTrainer++;
+                    if ($isEditingTeacher) {
+                        $listAllTrainerCourses = $listAllTrainerCourses . $htmllinktocourse .  '  ' . $roles . '<br /> ';
+                        $countCoursesWithTrainer++;
                     }
-                    if ( $isStudent ){
-                      $listAllStudentCourses = $listAllStudentCourses . $htmllinktocourse .  '  ' . $roles . '<br /> ';
-                      $countCoursesWithStudent++;
+                    if ($isStudent) {
+                        $listAllStudentCourses = $listAllStudentCourses . $htmllinktocourse .  '  ' . $roles . '<br /> ';
+                        $countCoursesWithStudent++;
                     }
-                    if ( $isNoneditingTeacher ){
-                      $listAllNoneditingTeacherCourses = $listAllNoneditingTeacherCourses . $htmllinktocourse .  '  ' . $roles . '<br /> ';
-                      $countCoursesWithNoneditingTeacher++;
+                    if ($isNoneditingTeacher) {
+                        $listAllNoneditingTeacherCourses = $listAllNoneditingTeacherCourses . $htmllinktocourse .  '  ' . $roles . '<br /> ';
+                        $countCoursesWithNoneditingTeacher++;
                     }
 
                     //}
@@ -126,21 +138,22 @@ class block_course_list_advanced extends block_list {
                 $this->title = get_string('mycourses');
                 /// If we can update any course of the view all isn't hidden, show the view all courses link
                 if ($allcourselink) {
-                    $this->content->footer = "<a href=\"$CFG->wwwroot/course/index.php\">".get_string("fulllistofcourses")."</a> ...";
+                    $this->content->footer = "<a href=\"$CFG->wwwroot/course/index.php\">" . get_string("fulllistofcourses") . "</a> ...";
                 }
             }
-            if ( $countCoursesWithTrainer )
-            {
-                $this->content->items[] = '<div class="course_list_advanced">' .  $countCoursesWithTrainer . ' ' . get_string('headlineteacher', 'block_course_list_advanced') . '</div>';
-                $this->content->items[] = $listAllTrainerCourses . '<br />';
+            if ($countCoursesWithTrainer) {
+                $this->content->items[] = '<div class="course_list_advanced">' 
+                    . $countCoursesWithTrainer
+                    . ' '
+                    . get_string('headlineteacher', 'block_course_list_advanced')
+                    . '</div>';
+                    $this->content->items[] = $listAllTrainerCourses . ' <br />';
             }
-            if ( $countCoursesWithStudent )
-            {
+            if ($countCoursesWithStudent) {
                 $this->content->items[] = '<div class="course_list_advanced">' .  $countCoursesWithStudent . ' ' . get_string('headlinestudent', 'block_course_list_advanced') . '</div>';
                 $this->content->items[] = $listAllStudentCourses . '<br />';
             }
-            if ( $countCoursesWithNoneditingTeacher )
-            {
+            if ($countCoursesWithNoneditingTeacher) {
                 $this->content->items[] = '<div class="course_list_advanced">' .  $countCoursesWithNoneditingTeacher . ' ' . get_string('headlinenoneditingteacher', 'block_course_list_advanced') . '</div>';
                 $this->content->items[] = $listAllNoneditingTeacherCourses . '<br />';
             }
@@ -149,7 +162,7 @@ class block_course_list_advanced extends block_list {
 
             $this->get_remote_courses();
             if ($this->content->items) { // make sure we don't return an empty list
-              return $this->content;
+                return $this->content;
             }
         }
 
@@ -160,11 +173,11 @@ class block_course_list_advanced extends block_list {
                 foreach ($categories as $category) {
                     $categoryname = $category->get_formatted_name();
                     $linkcss = $category->visible ? "" : " class=\"dimmed\" ";
-                    $this->content->items[]="<a $linkcss href=\"$CFG->wwwroot/course/index.php?categoryid=$category->id\">".$icon . $categoryname . "</a>";
+                    $this->content->items[] = "<a $linkcss href=\"$CFG->wwwroot/course/index.php?categoryid=$category->id\">" . $icon . $categoryname . "</a>";
                 }
-            /// If we can update any course of the view all isn't hidden, show the view all courses link
+                /// If we can update any course of the view all isn't hidden, show the view all courses link
                 if ($allcourselink) {
-                    $this->content->footer .= "<a href=\"$CFG->wwwroot/course/index.php\">".get_string('fulllistofcourses').'</a> ...';
+                    $this->content->footer .= "<a href=\"$CFG->wwwroot/course/index.php\">" . get_string('fulllistofcourses') . '</a> ...';
                 }
                 $this->title = get_string('categories');
             } else {                          // Just print course names of single category
@@ -176,14 +189,14 @@ class block_course_list_advanced extends block_list {
                         $coursecontext = context_course::instance($course->id);
                         $linkcss = $course->visible ? "" : " class=\"dimmed\" ";
 
-                        $this->content->items[]="<a $linkcss title=\""
-                                   . s($course->get_formatted_shortname())."\" ".
-                                   "href=\"$CFG->wwwroot/course/view.php?id=$course->id\">"
-                                   .$icon. $course->get_formatted_name() . "</a>";
+                        $this->content->items[] = "<a $linkcss title=\""
+                            . s($course->get_formatted_shortname()) . "\" " .
+                            "href=\"$CFG->wwwroot/course/view.php?id=$course->id\">"
+                            . $icon . $course->get_formatted_name() . "</a>";
                     }
-                /// If we can update any course of the view all isn't hidden, show the view all courses link
+                    /// If we can update any course of the view all isn't hidden, show the view all courses link
                     if ($allcourselink) {
-                        $this->content->footer .= "<a href=\"$CFG->wwwroot/course/index.php\">".get_string('fulllistofcourses').'</a> ...';
+                        $this->content->footer .= "<a href=\"$CFG->wwwroot/course/index.php\">" . get_string('fulllistofcourses') . '</a> ...';
                     }
                     $this->get_remote_courses();
                 } else {
@@ -191,7 +204,7 @@ class block_course_list_advanced extends block_list {
                     $this->content->icons[] = '';
                     $this->content->items[] = get_string('nocoursesyet');
                     if (has_capability('moodle/course:create', context_coursecat::instance($category->id))) {
-                        $this->content->footer = '<a href="'.$CFG->wwwroot.'/course/edit.php?category='.$category->id.'">'.get_string("addnewcourse").'</a> ...';
+                        $this->content->footer = '<a href="' . $CFG->wwwroot . '/course/edit.php?category=' . $category->id . '">' . get_string("addnewcourse") . '</a> ...';
                     }
                     $this->get_remote_courses();
                 }
@@ -202,7 +215,8 @@ class block_course_list_advanced extends block_list {
         return $this->content;
     }
 
-    function get_remote_courses() {
+    function get_remote_courses()
+    {
         global $CFG, $USER, $OUTPUT;
 
         if (!is_enabled_auth('mnet')) {
@@ -218,12 +232,12 @@ class block_course_list_advanced extends block_list {
         }
 
         if ($courses = get_my_remotecourses()) {
-            $this->content->items[] = get_string('remotecourses','mnet');
+            $this->content->items[] = get_string('remotecourses', 'mnet');
             $this->content->icons[] = '';
             foreach ($courses as $course) {
-                $this->content->items[]="<a title=\"" . format_string($course->shortname, true) . "\" ".
+                $this->content->items[] = "<a title=\"" . format_string($course->shortname, true) . "\" " .
                     "href=\"{$CFG->wwwroot}/auth/mnet/jump.php?hostid={$course->hostid}&amp;wantsurl=/course/view.php?id={$course->remoteid}\">"
-                    .$icon. format_string(get_course_display_name_for_list($course)) . "</a>";
+                    . $icon . format_string(get_course_display_name_for_list($course)) . "</a>";
             }
             // if we listed courses, we are done
             return true;
@@ -232,8 +246,8 @@ class block_course_list_advanced extends block_list {
         if ($hosts = get_my_remotehosts()) {
             $this->content->items[] = get_string('remotehosts', 'mnet');
             $this->content->icons[] = '';
-            foreach($USER->mnet_foreign_host_array as $somehost) {
-                $this->content->items[] = $somehost['count'].get_string('courseson','mnet').'<a title="'.$somehost['name'].'" href="'.$somehost['url'].'">'.$icon.$somehost['name'].'</a>';
+            foreach ($USER->mnet_foreign_host_array as $somehost) {
+                $this->content->items[] = $somehost['count'] . get_string('courseson', 'mnet') . '<a title="' . $somehost['name'] . '" href="' . $somehost['url'] . '">' . $icon . $somehost['name'] . '</a>';
             }
             // if we listed hosts, done
             return true;
@@ -247,7 +261,8 @@ class block_course_list_advanced extends block_list {
      *
      * @return string
      */
-    public function get_aria_role() {
+    public function get_aria_role()
+    {
         return 'navigation';
     }
 
@@ -257,7 +272,8 @@ class block_course_list_advanced extends block_list {
      * @return stdClass the configs for both the block instance and plugin
      * @since Moodle 3.8
      */
-    public function get_config_for_external() {
+    public function get_config_for_external()
+    {
         global $CFG;
 
         // Return all settings for all users since it is safe (no private keys, etc..).
