@@ -52,6 +52,8 @@ class block_course_list_advanced extends block_list
 
         $icon = $OUTPUT->pix_icon('i/course', get_string('course'));
 
+        $iconDeletion = $OUTPUT->pix_icon('i/delete', get_string('delete'));
+
         $adminseesall = true;
         if (isset($CFG->block_course_list_advanced_adminview)) {
             if ($CFG->block_course_list_advanced_adminview == 'own') {
@@ -70,8 +72,6 @@ class block_course_list_advanced extends block_list
             empty($CFG->disablemycourses) and isloggedin() and !isguestuser() and
             !(has_capability('moodle/course:update', context_system::instance()) and $adminseesall)
         ) {
-            // Just print My Courses
-
             $listAllTrainerCourses = '';
             $listAllStudentCourses = '';
             $listAllNoneditingTeacherCourses = '';
@@ -94,7 +94,6 @@ class block_course_list_advanced extends block_list
                         $endDate = get_string('noenddate', 'block_course_list_advanced') . ' ';
                     }
 
-
                     $coursecss = '';
                     if ($course->startdate <= $heute) {
                         if ($course_record->enddate > $heute || !$course_record->enddate) {
@@ -105,6 +104,19 @@ class block_course_list_advanced extends block_list
                     } else {
                         $coursecss = 'class="coursecssfuture"';
                     }
+
+                    /**
+                     * @todo check if this could be used for a better implementation 
+                     */
+                    // $roles = get_user_roles($coursecontext, $USER->id, false);
+                    // echo "<br>Kursid " . $course->id ;
+                    // var_dump($roles);
+                    // foreach ($roles as $dummy) {
+                    //    $role = key($roles);
+                    //    $rolename = $roles[$role]->shortname;
+                    //    echo "  " . $rolename . "; ";
+                    // }
+
 
                     /**
                      * getting all users with moodle/course:manageactivities. 
@@ -134,9 +146,9 @@ class block_course_list_advanced extends block_list
                     if (is_enrolled($coursecontext, $USER, 'mod/quiz:reviewmyattempts', $onlyactive = false)) {
                         $isStudent = true;
                         $roles = $roles . ' <i class="text-info" '
-                        . 'data-toggle="tooltip" '
-                        . 'data-placement="right" '
-                        . 'title="Schüler:in (reviewmyattempts)" ><font color="blue">S</font></i>';
+                            . 'data-toggle="tooltip" '
+                            . 'data-placement="right" '
+                            . 'title="Schüler:in (reviewmyattempts)" ><font color="blue">S</font></i>';
                     }
 
                     /**
@@ -162,16 +174,30 @@ class block_course_list_advanced extends block_list
                         . format_string(get_course_display_name_for_list($course))
                         . "</a>";
 
+                    $isallowedtodelete  = false;
+                    if (is_enrolled($coursecontext, $USER, 'moodle/course:delete', $onlyactive = false)) {
+                        $isallowedtodelete  = true;
+                    }
+                    if ($isallowedtodelete) {
+                        $htmllinktocoursedeletion = "<a $linkcss style=\"color: #921616\" title=\""
+                            . format_string($course->shortname, true, array('context' => $coursecontext))
+                            . "\" "
+                            . "href=\"$CFG->wwwroot/course/delete.php?id=$course->id\">"
+                            . $iconDeletion
+                            . "</a>";
+                    }
+
                     if ($isEditingTeacher) {
-                        $listAllTrainerCourses = $listAllTrainerCourses . '<div ' . $coursecss . '>' . $htmllinktocourse .  '  ' . $roles . '<br>' . $duration . '</div>';
+                        $listAllTrainerCourses = $listAllTrainerCourses . '<div ' . $linkcss . '>' . '<div ' . $coursecss . '>' . $htmllinktocourse .  '  ' . $htmllinktocoursedeletion . ' ' . $roles . '<br>' . $duration . '</div></div>';
                         $countCoursesWithTrainer++;
                     }
                     if ($isStudent) {
-                        $listAllStudentCourses = $listAllStudentCourses . '<div ' . $coursecss . '>' . $htmllinktocourse .  '  ' . $roles . '<br>' . $duration . '</div>';
+                        $listAllStudentCourses = $listAllStudentCourses . '<div ' . $linkcss . '>' . '<div ' . $coursecss . '>' . $htmllinktocourse .  '  ' . $roles . '<br>' . $duration . '</div></div>';
                         $countCoursesWithStudent++;
                     }
                     if ($isNoneditingTeacher) {
                         $listAllNoneditingTeacherCourses = $listAllNoneditingTeacherCourses
+                            . '<div ' . $linkcss . '>'
                             . '<div '
                             . $coursecss
                             . '>'
@@ -180,7 +206,7 @@ class block_course_list_advanced extends block_list
                             . $roles
                             . '<br>'
                             . $duration
-                            . '</div>';
+                            . '</div></div>';
                         $countCoursesWithNoneditingTeacher++;
                     }
                 }

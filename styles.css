@@ -24,6 +24,12 @@
     padding-left: 2px;
     border-left: solid 5px rgb(155, 13, 13);
 }
+.dimmed .coursecssfinished {
+    border-left: #af8080 solid 5px;
+}
+
+
+
 .coursecssfuture{
     margin-bottom: 10px;
     padding-left: 2px;
