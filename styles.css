@@ -6,10 +6,6 @@
     margin-bottom: .3em;
 }
 
-.course_list_advanced{
-    //font-weight: bold;
-}
-
 .course_list_advanced.additionalInformation{
     color: blue;
 }
@@ -17,3 +13,26 @@
 .tooltip > .tooltip-inner {
     background-color: #39f;
 }
+
+.coursecssactiv{
+    margin-bottom: 10px;
+    padding-left: 2px;
+    border-left: solid 5px rgb(5, 148, 60);
+}
+.coursecssfinished{
+    margin-bottom: 10px;
+    padding-left: 2px;
+    border-left: solid 5px rgb(155, 13, 13);
+}
+.dimmed .coursecssfinished {
+    border-left: #af8080 solid 5px;
+}
+
+
+
+.coursecssfuture{
+    margin-bottom: 10px;
+    padding-left: 2px;
+    border-left: solid 5px rgb(58, 132, 241);
+}
+

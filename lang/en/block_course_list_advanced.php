@@ -36,3 +36,4 @@ $string['privacy:metadata'] = 'The Courses block only shows data about courses a
 $string['headlineteacher'] = '<b>Course(s) - trainer</b>';
 $string['headlinestudent'] = '<b>Course(s) - student</b>';
 $string['headlinenoneditingteacher'] = '<b>Course(s) - trainer nonediting</b>';
+$string['noenddate'] = 'open';

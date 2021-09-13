@@ -1,9 +1,14 @@
 # moodle-block_course_list_advanced
-In this example the user is enrolled in two courses. The normal block course list shows all courses and has no information about the role in the course.
+The normal block course list shows all courses and has no information about the role in the course.
 
-The block moodle-block_course_list_advanced adds after a course the information if a user is a teacher in this course. As a normal student no extra information is added.
+The block moodle-block_course_list_advanced adds some more information about a course. I adds the information whitch of the following roles a user is enrolled into a course.
+Also colors indicates courses that 
+  are in progress --> green
+  are past -> red
+  are in the future --> blue
 
-![grafik](https://user-images.githubusercontent.com/31856043/131224531-ba8f91b4-ba9f-4cf0-be56-17273e0ba000.png)
+![grafik](https://user-images.githubusercontent.com/31856043/132042960-dc6645ea-7c34-4b5e-99fa-e4bcac4511c9.png)
+
 
 At the end of the block a list of all courses is shown where the usere is enrolled as teacher.
 
@@ -11,6 +16,13 @@ At the end of the block a list of all courses is shown where the usere is enroll
 block may be "expensive" in large moodleinstances with many users. instead of using a block it might be a good idea to implement the functionality as a part of the profile-page
 
 # Changelog #
+
+## [[v0.92]] ##
+Adding startdate and enddate.
+Also colors indicates courses that 
+  are in progress --> green
+  are past -> red
+  are in the future --> blue
 
 ## [[v0.91]] ##
 added letter after the coursename to indicate role
