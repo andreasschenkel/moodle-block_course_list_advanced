@@ -25,6 +25,7 @@
 
 $string['adminview'] = 'Adminansicht';
 $string['allcourses'] = 'Administrator:innen sehen alle Kurse';
+$string['blocktitle'] = 'Meine Kurse advanced';
 $string['configadminview'] = 'Alle Kurse anzeigen oder nur Kurse, in die Administratorin oder Administatorin mit einer Rolle eingeschrieben ist.';
 $string['confighideallcourseslink'] = 'Entferne den \'Alle Kurse\' Link unter der Liste aller Kurse. Einstellung beeinflusst nicht die Anzeoge für Admins.)';
 $string['course_list_advanced:addinstance'] = 'Block Kursliste erweitert hinzufügen';

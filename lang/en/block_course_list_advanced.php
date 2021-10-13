@@ -25,6 +25,7 @@
 
 $string['adminview'] = 'Admin view';
 $string['allcourses'] = 'Admin user sees all courses';
+$string['blocktitle'] = 'Courses advanced';
 $string['configadminview'] = 'Whether to display all courses in the Courses advanced block, or only courses that the admin is enrolled in.';
 $string['confighideallcourseslink'] = 'Remove the \'All courses\' link under the list of courses. (This setting does not affect the admin view.)';
 $string['course_list_advanced:addinstance'] = 'Add a new courses block';

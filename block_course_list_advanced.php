@@ -19,7 +19,7 @@
  *
  * @package    block_course_list_advanced
  * @copyright  1999 onwards Martin Dougiamas (http://dougiamas.com)
- * @author     Andreas Schenkel - Schulportal Hessen
+ * @author     Andreas Schenkel - Schulportal Hessen 2021
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -210,7 +210,8 @@ class block_course_list_advanced extends block_list
                         $countCoursesWithNoneditingTeacher++;
                     }
                 }
-                $this->title = get_string('mycourses');
+                //$this->title = get_string('mycourses');
+                $this->title = get_string('blocktitle', 'block_course_list_advanced');
                 /// If we can update any course of the view all isn't hidden, show the view all courses link
                 if ($allcourselink) {
                     $this->content->footer = "<a href=\"$CFG->wwwroot/course/index.php\">"
