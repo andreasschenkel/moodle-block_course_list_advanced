@@ -23,14 +23,22 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-$string['adminview'] = 'Admin view';
 $string['allcourses'] = 'Admin user sees all courses';
 $string['blocktitle'] = 'Courses advanced';
+
+$string['adminview'] = 'Admin view';
 $string['configadminview'] = 'Whether to display all courses in the Courses advanced block, or only courses that the admin is enrolled in.';
+
+$string['hideallcourseslink'] = 'Hide \'All courses\' link';
 $string['confighideallcourseslink'] = 'Remove the \'All courses\' link under the list of courses. (This setting does not affect the admin view.)';
+
+$string['showdeleteicon'] = 'Show a delete-icon to delete directly from the block.';
+$string['configshowdeleteicon'] = 'If set to true  an delete-icon is shown nearby the coursename in order to be able to delet the course directly from the block.';
+
+
 $string['course_list_advanced:addinstance'] = 'Add a new courses block';
 $string['course_list_advanced:myaddinstance'] = 'Add a new courses block to Dashboard';
-$string['hideallcourseslink'] = 'Hide \'All courses\' link';
+
 $string['owncourses'] = 'Admin user sees own courses';
 $string['pluginname'] = 'Courses advanced';
 $string['privacy:metadata'] = 'The Courses block only shows data about courses and does not store any data itself.';
@@ -38,3 +46,4 @@ $string['headlineteacher'] = '<b>Course(s) - trainer</b>';
 $string['headlinestudent'] = '<b>Course(s) - student</b>';
 $string['headlinenoneditingteacher'] = '<b>Course(s) - trainer nonediting</b>';
 $string['noenddate'] = 'open';
+

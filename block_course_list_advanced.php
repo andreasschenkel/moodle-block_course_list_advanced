@@ -61,6 +61,13 @@ class block_course_list_advanced extends block_list
             }
         }
 
+        $showdeleteicon = false;
+        if (isset($CFG->block_course_list_advanced_showdeleteicon)) {
+            if ($CFG->block_course_list_advanced_showdeleteicon == true) {
+                $showdeleteicon = true;
+            }
+        }
+
         $allcourselink =
             (has_capability('moodle/course:update', context_system::instance())
                 || empty($CFG->block_course_list_hideallcourseslink)) &&
@@ -175,16 +182,20 @@ class block_course_list_advanced extends block_list
                         . "</a>";
 
                     $isallowedtodelete  = false;
-                    if (is_enrolled($coursecontext, $USER, 'moodle/course:delete', $onlyactive = false)) {
-                        $isallowedtodelete  = true;
-                    }
-                    if ($isallowedtodelete) {
-                        $htmllinktocoursedeletion = "<a $linkcss style=\"color: #921616\" title=\""
-                            . format_string($course->shortname, true, array('context' => $coursecontext))
-                            . "\" "
-                            . "href=\"$CFG->wwwroot/course/delete.php?id=$course->id\">"
-                            . $iconDeletion
-                            . "</a>";
+
+                    // only if showdeleteicon is true, then we have to check, which courses are deletable and show a delete-icon
+                    if ($showdeleteicon) {
+                        if (is_enrolled($coursecontext, $USER, 'moodle/course:delete', $onlyactive = false)) {
+                            $isallowedtodelete  = true;
+                        }
+                        if ($isallowedtodelete) {
+                            $htmllinktocoursedeletion = "<a $linkcss style=\"color: #921616\" title=\""
+                                . format_string($course->shortname, true, array('context' => $coursecontext))
+                                . "\" "
+                                . "href=\"$CFG->wwwroot/course/delete.php?id=$course->id\">"
+                                . $iconDeletion
+                                . "</a>";
+                        }
                     }
 
                     if ($isEditingTeacher) {
@@ -366,7 +377,8 @@ class block_course_list_advanced extends block_list
         // Return all settings for all users since it is safe (no private keys, etc..).
         $configs = (object) [
             'adminview' => $CFG->block_course_list_advanced_adminview,
-            'hideallcourseslink' => $CFG->block_course_list_advanced_hideallcourseslink
+            'hideallcourseslink' => $CFG->block_course_list_advanced_hideallcourseslink,
+            'showdeleteicon' => $CFG->block_course_list_advanced_showdeleteicon
         ];
 
         return (object) [

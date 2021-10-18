@@ -23,14 +23,22 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-$string['adminview'] = 'Adminansicht';
 $string['allcourses'] = 'Administrator:innen sehen alle Kurse';
 $string['blocktitle'] = 'Meine Kurse advanced';
+
+$string['adminview'] = 'Adminansicht';
 $string['configadminview'] = 'Alle Kurse anzeigen oder nur Kurse, in die Administratorin oder Administatorin mit einer Rolle eingeschrieben ist.';
+
+$string['hideallcourseslink'] = 'Verberge \'Alle Kurse\' Link';
 $string['confighideallcourseslink'] = 'Entferne den \'Alle Kurse\' Link unter der Liste aller Kurse. Einstellung beeinflusst nicht die Anzeoge für Admins.)';
+
 $string['course_list_advanced:addinstance'] = 'Block Kursliste erweitert hinzufügen';
 $string['course_list_advanced:myaddinstance'] = 'Block Kursliste erweitert zum Arbeitsplatz hinzufügen';
-$string['hideallcourseslink'] = 'Verberge \'Alle Kurse\' Link';
+
+$string['showdeleteicon'] = 'Löschen-Icon anzeigen, um direkt im Block löschen zu können.';
+$string['configshowdeleteicon'] = 'Wenn aktiviert, dann wird im Block neben dem Kursnamen ein Löschen-Icon angezeigt, um den Kurs gegebenenfalls direkt löschen zu können.';
+
+
 $string['owncourses'] = 'Admin sieht eigene Kurse';
 $string['pluginname'] = 'Kursliste erweitert';
 $string['privacy:metadata'] = 'Der Block Kursliste erweitert zeigt nur Daten über Kurse an und speichert keine Daten.';
@@ -38,3 +46,4 @@ $string['headlineteacher'] = '<b>Kurs(e) - Lehrende</b>';
 $string['headlinestudent'] = '<b>Kurs(e) - Teilnehmer</b>';
 $string['headlinenoneditingteacher'] = '<b>Kurs(e) - Lehrende o Bearbeitung</b>';
 $string['noenddate'] = 'offen';
+

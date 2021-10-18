@@ -32,4 +32,9 @@ if ($ADMIN->fulltree) {
 
     $settings->add(new admin_setting_configcheckbox('block_course_list_advanced_hideallcourseslink', get_string('hideallcourseslink', 'block_course_list_advanced'),
                        get_string('confighideallcourseslink', 'block_course_list_advanced'), 0));
+
+    $settings->add(new admin_setting_configcheckbox('block_course_list_advanced_showdeleteicon', get_string('showdeleteicon', 'block_course_list_advanced'),
+                       get_string('configshowdeleteicon', 'block_course_list_advanced'), 0));
+                       
+
 }
