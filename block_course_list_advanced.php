@@ -51,21 +51,16 @@ class block_course_list_advanced extends block_list
         $this->content->footer = '';
 
         $icon = $OUTPUT->pix_icon('i/course', get_string('course'));
-
         $iconDeletion = $OUTPUT->pix_icon('i/delete', get_string('delete'));
 
         $adminseesall = true;
-        if (isset($CFG->block_course_list_advanced_adminview)) {
-            if ($CFG->block_course_list_advanced_adminview == 'own') {
-                $adminseesall = false;
-            }
+        if (isset($CFG->block_course_list_advanced_adminview) && $CFG->block_course_list_advanced_adminview == 'own') {
+            $adminseesall = false;
         }
 
         $showdeleteicon = false;
-        if (isset($CFG->block_course_list_advanced_showdeleteicon)) {
-            if ($CFG->block_course_list_advanced_showdeleteicon == true) {
-                $showdeleteicon = true;
-            }
+        if (isset($CFG->block_course_list_advanced_showdeleteicon) && $CFG->block_course_list_advanced_showdeleteicon == true) {
+            $showdeleteicon = true;
         }
 
         $allcourselink =
