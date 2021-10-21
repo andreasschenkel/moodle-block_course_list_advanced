@@ -32,6 +32,9 @@ $string['configadminview'] = 'Alle Kurse anzeigen oder nur Kurse, in die Adminis
 $string['hideallcourseslink'] = 'Verberge \'Alle Kurse\' Link';
 $string['confighideallcourseslink'] = 'Entferne den \'Alle Kurse\' Link unter der Liste aller Kurse. Einstellung beeinflusst nicht die Anzeoge für Admins.)';
 
+$string['usesphorphanedfiles'] = 'Nutze Plugin für verwaiste Dateien (Plugin muss installiert sein!)';
+$string['configusesphorphanedfiles'] = 'Wenn aktiviert wird im Block ein ? als Link angezeigt um direkt zur Anzeige der verwaisten Dateien des Kurses zu gelangen.';
+
 $string['course_list_advanced:addinstance'] = 'Block Kursliste erweitert hinzufügen';
 $string['course_list_advanced:myaddinstance'] = 'Block Kursliste erweitert zum Arbeitsplatz hinzufügen';
 

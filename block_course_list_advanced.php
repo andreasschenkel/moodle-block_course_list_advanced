@@ -63,6 +63,11 @@ class block_course_list_advanced extends block_list
             $showdeleteicon = true;
         }
 
+        $usesphorphanedfiles = false;
+        if (isset($CFG->block_course_list_advanced_showdeleteicon) && $CFG->block_course_list_advanced_usesphorphanedfiles == true) {
+            $usesphorphanedfiles = true;
+        }
+
         $allcourselink =
             (has_capability('moodle/course:update', context_system::instance())
                 || empty($CFG->block_course_list_hideallcourseslink)) &&
@@ -193,8 +198,14 @@ class block_course_list_advanced extends block_list
                         }
                     }
 
+                    $html = '';
+                    if ($usesphorphanedfiles) {
+                        $orphanedFilesLink = new moodle_url('/report/sphorphanedfiles/index.php', array('id' => $course->id));
+                        $html = '<a href="' . $orphanedFilesLink . '">?</a>' ;
+                    }
+
                     if ($isEditingTeacher) {
-                        $listAllTrainerCourses = $listAllTrainerCourses . '<div ' . $linkcss . '>' . '<div ' . $coursecss . '>' . $htmllinktocourse .  '  ' . $htmllinktocoursedeletion . ' ' . $roles . '<br>' . $duration . '</div></div>';
+                        $listAllTrainerCourses = $listAllTrainerCourses  . '<div ' . $linkcss . '>' . '<div ' . $coursecss . '>' . $htmllinktocourse .  '  ' .  $html . '  ' . $htmllinktocoursedeletion . ' ' . $roles . '<br>' . $duration . '</div></div>';
                         $countCoursesWithTrainer++;
                     }
                     if ($isStudent) {
