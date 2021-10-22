@@ -198,14 +198,15 @@ class block_course_list_advanced extends block_list
                         }
                     }
 
-                    $html = '';
+                    $icon = '<i class="fa fa-server"></i>';
+                    $linkViewOrphanedFiles = '';
                     if ($usesphorphanedfiles) {
                         $orphanedFilesLink = new moodle_url('/report/sphorphanedfiles/index.php', array('id' => $course->id));
-                        $html = '<a href="' . $orphanedFilesLink . '">?</a>' ;
+                        $linkViewOrphanedFiles = '<a href="' . $orphanedFilesLink . '">  ' . $icon . '</a>';
                     }
 
                     if ($isEditingTeacher) {
-                        $listAllTrainerCourses = $listAllTrainerCourses  . '<div ' . $linkcss . '>' . '<div ' . $coursecss . '>' . $htmllinktocourse .  '  ' .  $html . '  ' . $htmllinktocoursedeletion . ' ' . $roles . '<br>' . $duration . '</div></div>';
+                        $listAllTrainerCourses = $listAllTrainerCourses  . '<div ' . $linkcss . '>' . '<div ' . $coursecss . '>' . $htmllinktocourse .  '  ' .  $linkViewOrphanedFiles . '  ' . $htmllinktocoursedeletion . ' ' . $roles . '<br>' . $duration . '</div></div>';
                         $countCoursesWithTrainer++;
                     }
                     if ($isStudent) {
