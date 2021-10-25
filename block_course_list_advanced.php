@@ -41,9 +41,15 @@ class block_course_list_advanced extends block_list
     {
         global $CFG, $USER, $DB, $OUTPUT;
 
+        if (!has_capability('block/course_list_advanced:view', $this->context)) {
+            return null;
+        }
+
         if ($this->content !== null) {
             return $this->content;
         }
+
+     
 
         $this->content = new stdClass(); //????
         $this->content->items = array();
@@ -129,6 +135,7 @@ class block_course_list_advanced extends block_list
                      * getting all users with moodle/course:manageactivities. 
                      * This should be all user with role teacher (without noneditingteacher)
                      * @todo implement better way to find role of the user in the course
+                     * @todo see at https://docs.moodle.org/dev/NEWMODULE_Adding_capabilities
                      */
                     $editingteachers = get_users_by_capability($coursecontext, 'moodle/course:manageactivities');
                     $isEditingTeacher = false;

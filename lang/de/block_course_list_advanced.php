@@ -37,6 +37,7 @@ $string['configusesphorphanedfiles'] = 'Wenn aktiviert wird im Block ein ? als L
 
 $string['course_list_advanced:addinstance'] = 'Block Kursliste erweitert hinzufügen';
 $string['course_list_advanced:myaddinstance'] = 'Block Kursliste erweitert zum Arbeitsplatz hinzufügen';
+$string['course_list_advanced:view'] = 'Block anzeigen';
 
 $string['showdeleteicon'] = 'Löschen-Icon anzeigen, um direkt im Block löschen zu können.';
 $string['configshowdeleteicon'] = 'Wenn aktiviert, dann wird im Block neben dem Kursnamen ein Löschen-Icon angezeigt, um den Kurs gegebenenfalls direkt löschen zu können.';
@@ -49,4 +50,6 @@ $string['headlineteacher'] = '<b>Kurs(e) - Lehrende</b>';
 $string['headlinestudent'] = '<b>Kurs(e) - Teilnehmer</b>';
 $string['headlinenoneditingteacher'] = '<b>Kurs(e) - Lehrende o Bearbeitung</b>';
 $string['noenddate'] = 'offen';
+
+
 

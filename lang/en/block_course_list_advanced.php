@@ -37,6 +37,7 @@ $string['configshowdeleteicon'] = 'If set to true  an delete-icon is shown nearb
 
 $string['usesphorphanedfiles'] = 'Use Plugin sphorphanedfiles (Plugin must be installed!)';
 $string['configusesphorphanedfiles'] = 'When activatet a ? as a link is shown to jump direktly to the List of orphaned files in this course.';
+$string['course_list_advanced:view'] = 'Show block';
 
 $string['course_list_advanced:addinstance'] = 'Add a new courses block';
 $string['course_list_advanced:myaddinstance'] = 'Add a new courses block to Dashboard';
