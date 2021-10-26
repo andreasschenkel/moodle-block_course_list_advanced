@@ -25,6 +25,8 @@
 
 $string['allcourses'] = 'Admin user sees all courses';
 $string['blocktitle'] = 'Courses advanced';
+$string['blocktitlealt'] = 'not supported';
+$string['blockfooteralt'] = 'Content only supported in a course where user is trainer';
 
 $string['adminview'] = 'Admin view';
 $string['configadminview'] = 'Whether to display all courses in the Courses advanced block, or only courses that the admin is enrolled in.';

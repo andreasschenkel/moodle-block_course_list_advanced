@@ -41,20 +41,21 @@ class block_course_list_advanced extends block_list
     {
         global $CFG, $USER, $DB, $OUTPUT;
 
-        if (!has_capability('block/course_list_advanced:view', $this->context)) {
-            return null;
-        }
-
         if ($this->content !== null) {
             return $this->content;
         }
-
-     
 
         $this->content = new stdClass(); //????
         $this->content->items = array();
         $this->content->icons = array();
         $this->content->footer = '';
+
+        // if not BOTH privileges then do not show content for performancereason. must be allowed to see course AND must be trainer 
+        if ( !(has_capability('block/course_list_advanced:view', $this->context) && has_capability('moodle/course:update', $this->context )) ) {
+            $this->title = get_string('blocktitlealt', 'block_course_list_advanced');
+            $this->content->footer = get_string('blockfooteralt', 'block_course_list_advanced');
+            return $this->content;
+        }
 
         $icon = $OUTPUT->pix_icon('i/course', get_string('course'));
         $iconDeletion = $OUTPUT->pix_icon('i/delete', get_string('delete'));
@@ -191,25 +192,31 @@ class block_course_list_advanced extends block_list
                     $isallowedtodelete  = false;
 
                     // only if showdeleteicon is true, then we have to check, which courses are deletable and show a delete-icon
-                    if ($showdeleteicon) {
-                        if (is_enrolled($coursecontext, $USER, 'moodle/course:delete', $onlyactive = false)) {
-                            $isallowedtodelete  = true;
-                        }
-                        if ($isallowedtodelete) {
-                            $htmllinktocoursedeletion = "<a $linkcss style=\"color: #921616\" title=\""
-                                . format_string($course->shortname, true, array('context' => $coursecontext))
-                                . "\" "
-                                . "href=\"$CFG->wwwroot/course/delete.php?id=$course->id\">"
-                                . $iconDeletion
-                                . "</a>";
-                        }
+                    if ($showdeleteicon && is_enrolled($coursecontext, $USER, 'moodle/course:delete', $onlyactive = false)) {
+                        //$isallowedtodelete  = true;
+                        $htmllinktocoursedeletion = "<a $linkcss style=\"color: #921616\" title=\""
+                            . format_string($course->shortname, true, array('context' => $coursecontext))
+                            . "\" "
+                            . "href=\"$CFG->wwwroot/course/delete.php?id=$course->id\">"
+                            . $iconDeletion
+                            . "</a>";
+                        
                     }
 
-                    $icon = '<i class="fa fa-server"></i>';
+                    $iconOrphanedFilesLink = 
+
+                    ' <i class="text-info" 
+                    data-toggle="tooltip" 
+                    data-placement="right" 
+                    title="Report über verwaiste Dateien" >
+                    <i class="fa fa-server"></i> </i>';
+
+
+
                     $linkViewOrphanedFiles = '';
                     if ($usesphorphanedfiles) {
                         $orphanedFilesLink = new moodle_url('/report/sphorphanedfiles/index.php', array('id' => $course->id));
-                        $linkViewOrphanedFiles = '<a href="' . $orphanedFilesLink . '">  ' . $icon . '</a>';
+                        $linkViewOrphanedFiles = '<a href="' . $orphanedFilesLink . '">  ' . $iconOrphanedFilesLink . '</a>';
                     }
 
                     if ($isEditingTeacher) {
