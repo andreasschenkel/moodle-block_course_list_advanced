@@ -51,8 +51,10 @@ At the end of the block a list of all courses is shown where the usere is enroll
 
 
 # Changelog #
+## [[v2.01]] ##
+only correcting the tag for the merge and release
 
-## [[v1.00]] ##
+## [[v2.00]] ##
 - added some docúmentation
 - added configuration
 - only show content if block is in a course AND user is trainer
