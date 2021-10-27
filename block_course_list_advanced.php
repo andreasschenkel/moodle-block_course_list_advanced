@@ -19,7 +19,7 @@
  *
  * @package    block_course_list_advanced
  * @copyright  1999 onwards Martin Dougiamas (http://dougiamas.com)
- * @author     Andreas Schenkel - Schulportal Hessen
+ * @author     Andreas Schenkel - Schulportal Hessen 2021
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -50,15 +50,29 @@ class block_course_list_advanced extends block_list
         $this->content->icons = array();
         $this->content->footer = '';
 
-        $icon = $OUTPUT->pix_icon('i/course', get_string('course'));
+        // if not BOTH privileges then do not show content for performancereason. must be allowed to see course AND must be trainer 
+        if ( !(has_capability('block/course_list_advanced:view', $this->context) && has_capability('moodle/course:update', $this->context )) ) {
+            $this->title = get_string('blocktitlealt', 'block_course_list_advanced');
+            $this->content->footer = get_string('blockfooteralt', 'block_course_list_advanced');
+            return $this->content;
+        }
 
+        $icon = $OUTPUT->pix_icon('i/course', get_string('course'));
         $iconDeletion = $OUTPUT->pix_icon('i/delete', get_string('delete'));
 
         $adminseesall = true;
-        if (isset($CFG->block_course_list_advanced_adminview)) {
-            if ($CFG->block_course_list_advanced_adminview == 'own') {
-                $adminseesall = false;
-            }
+        if (isset($CFG->block_course_list_advanced_adminview) && $CFG->block_course_list_advanced_adminview == 'own') {
+            $adminseesall = false;
+        }
+
+        $showdeleteicon = false;
+        if (isset($CFG->block_course_list_advanced_showdeleteicon) && $CFG->block_course_list_advanced_showdeleteicon == true) {
+            $showdeleteicon = true;
+        }
+
+        $usesphorphanedfiles = false;
+        if (isset($CFG->block_course_list_advanced_showdeleteicon) && $CFG->block_course_list_advanced_usesphorphanedfiles == true) {
+            $usesphorphanedfiles = true;
         }
 
         $allcourselink =
@@ -122,6 +136,7 @@ class block_course_list_advanced extends block_list
                      * getting all users with moodle/course:manageactivities. 
                      * This should be all user with role teacher (without noneditingteacher)
                      * @todo implement better way to find role of the user in the course
+                     * @todo see at https://docs.moodle.org/dev/NEWMODULE_Adding_capabilities
                      */
                     $editingteachers = get_users_by_capability($coursecontext, 'moodle/course:manageactivities');
                     $isEditingTeacher = false;
@@ -175,20 +190,37 @@ class block_course_list_advanced extends block_list
                         . "</a>";
 
                     $isallowedtodelete  = false;
-                    if (is_enrolled($coursecontext, $USER, 'moodle/course:delete', $onlyactive = false)) {
-                        $isallowedtodelete  = true;
-                    }
-                    if ($isallowedtodelete) {
+
+                    // only if showdeleteicon is true, then we have to check, which courses are deletable and show a delete-icon
+                    if ($showdeleteicon && is_enrolled($coursecontext, $USER, 'moodle/course:delete', $onlyactive = false)) {
+                        //$isallowedtodelete  = true;
                         $htmllinktocoursedeletion = "<a $linkcss style=\"color: #921616\" title=\""
                             . format_string($course->shortname, true, array('context' => $coursecontext))
                             . "\" "
                             . "href=\"$CFG->wwwroot/course/delete.php?id=$course->id\">"
                             . $iconDeletion
                             . "</a>";
+                        
+                    }
+
+                    $iconOrphanedFilesLink = 
+
+                    ' <i class="text-info" 
+                    data-toggle="tooltip" 
+                    data-placement="right" 
+                    title="Report über verwaiste Dateien" >
+                    <i class="fa fa-server"></i> </i>';
+
+
+
+                    $linkViewOrphanedFiles = '';
+                    if ($usesphorphanedfiles) {
+                        $orphanedFilesLink = new moodle_url('/report/sphorphanedfiles/index.php', array('id' => $course->id));
+                        $linkViewOrphanedFiles = '<a href="' . $orphanedFilesLink . '">  ' . $iconOrphanedFilesLink . '</a>';
                     }
 
                     if ($isEditingTeacher) {
-                        $listAllTrainerCourses = $listAllTrainerCourses . '<div ' . $linkcss . '>' . '<div ' . $coursecss . '>' . $htmllinktocourse .  '  ' . $htmllinktocoursedeletion . ' ' . $roles . '<br>' . $duration . '</div></div>';
+                        $listAllTrainerCourses = $listAllTrainerCourses  . '<div ' . $linkcss . '>' . '<div ' . $coursecss . '>' . $htmllinktocourse .  '  ' .  $linkViewOrphanedFiles . '  ' . $htmllinktocoursedeletion . ' ' . $roles . '<br>' . $duration . '</div></div>';
                         $countCoursesWithTrainer++;
                     }
                     if ($isStudent) {
@@ -210,7 +242,8 @@ class block_course_list_advanced extends block_list
                         $countCoursesWithNoneditingTeacher++;
                     }
                 }
-                $this->title = get_string('mycourses');
+                //$this->title = get_string('mycourses');
+                $this->title = get_string('blocktitle', 'block_course_list_advanced');
                 /// If we can update any course of the view all isn't hidden, show the view all courses link
                 if ($allcourselink) {
                     $this->content->footer = "<a href=\"$CFG->wwwroot/course/index.php\">"
@@ -365,7 +398,8 @@ class block_course_list_advanced extends block_list
         // Return all settings for all users since it is safe (no private keys, etc..).
         $configs = (object) [
             'adminview' => $CFG->block_course_list_advanced_adminview,
-            'hideallcourseslink' => $CFG->block_course_list_advanced_hideallcourseslink
+            'hideallcourseslink' => $CFG->block_course_list_advanced_hideallcourseslink,
+            'showdeleteicon' => $CFG->block_course_list_advanced_showdeleteicon
         ];
 
         return (object) [

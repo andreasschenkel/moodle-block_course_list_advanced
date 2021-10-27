@@ -25,11 +25,34 @@
 defined('MOODLE_INTERNAL') || die;
 
 if ($ADMIN->fulltree) {
-    $options = array('all'=>get_string('allcourses', 'block_course_list_advanced'), 'own'=>get_string('owncourses', 'block_course_list_advanced'));
+    $options = array('all' => get_string('allcourses', 'block_course_list_advanced'), 'own' => get_string('owncourses', 'block_course_list_advanced'));
 
-    $settings->add(new admin_setting_configselect('block_course_list_advanced_adminview', get_string('adminview', 'block_course_list_advanced'),
-                       get_string('configadminview', 'block_course_list_advanced'), 'all', $options));
+    $settings->add(new admin_setting_configselect(
+        'block_course_list_advanced_adminview',
+        get_string('adminview', 'block_course_list_advanced'),
+        get_string('configadminview', 'block_course_list_advanced'),
+        'all',
+        $options
+    ));
 
-    $settings->add(new admin_setting_configcheckbox('block_course_list_advanced_hideallcourseslink', get_string('hideallcourseslink', 'block_course_list_advanced'),
-                       get_string('confighideallcourseslink', 'block_course_list_advanced'), 0));
+    $settings->add(new admin_setting_configcheckbox(
+        'block_course_list_advanced_hideallcourseslink',
+        get_string('hideallcourseslink', 'block_course_list_advanced'),
+        get_string('confighideallcourseslink', 'block_course_list_advanced'),
+        0
+    ));
+
+    $settings->add(new admin_setting_configcheckbox(
+        'block_course_list_advanced_showdeleteicon',
+        get_string('showdeleteicon', 'block_course_list_advanced'),
+        get_string('configshowdeleteicon', 'block_course_list_advanced'),
+        0
+    ));
+
+    $settings->add(new admin_setting_configcheckbox(
+        'block_course_list_advanced_usesphorphanedfiles',
+        get_string('usesphorphanedfiles', 'block_course_list_advanced'),
+        get_string('configusesphorphanedfiles', 'block_course_list_advanced'),
+        0
+    ));
 }

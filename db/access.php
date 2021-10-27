@@ -49,4 +49,16 @@ $capabilities = array(
 
         'clonepermissionsfrom' => 'moodle/site:manageblocks'
     ),
+
+    'block/course_list_advanced:view' => array(
+        'riskbitmask' => RISK_SPAM | RISK_XSS,
+
+        'captype' => 'write',
+        'contextlevel' => CONTEXT_BLOCK,
+        'archetypes' => array(
+            'editingteacher' => CAP_ALLOW,
+            'student' => CAP_PREVENT,
+        )
+    ),
+
 );

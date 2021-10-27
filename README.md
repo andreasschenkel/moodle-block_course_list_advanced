@@ -1,28 +1,67 @@
 # moodle-block_course_list_advanced
 The normal block course list shows all courses and has no information about the role in the course.
 
-The block moodle-block_course_list_advanced adds some more information about a course. I adds the information whitch of the following roles a user is enrolled into a course.
-Also colors indicates courses that 
-  are in progress --> green
-  are past -> red
-  are in the future --> blue
+The block moodle-block_course_list_advanced adds some more information about a course. I adds the information which of the following roles a user is enrolled into a course.
 
-![grafik](https://user-images.githubusercontent.com/31856043/132042960-dc6645ea-7c34-4b5e-99fa-e4bcac4511c9.png)
+For performance and testing-reason this first version only shows the content if the block is added into a course AND the user is trainer.
+
+![image](https://user-images.githubusercontent.com/31856043/139007404-9f72772a-6e79-4d07-8fd0-4924613c47ac.png)
+
+## numbers ##
+### 1, 2: ###
+counts the courses with the role trainer or student
+
+
+### 3, 4, 5: ###
+Also colors indicates courses that 
+  (are in progress --> green), 
+  (are past -> red),
+  (are in the future --> blue)
+
+### 6, 7, 8:
+Startdate and enddate of a course
+
+### 9:
+able to delete a course if capability moodle/course:delete 
+
+### 10:
+Indicates trainer or student
+
+### 11:
+note jet supported
+
+
+# Configure the block #
+
+![image](https://user-images.githubusercontent.com/31856043/139007295-62e27c76-1eb5-415f-9aab-8c9929968d17.png)
+
 
 
 At the end of the block a list of all courses is shown where the usere is enrolled as teacher.
 
 # ToDo #
-block may be "expensive" in large moodleinstances with many users. instead of using a block it might be a good idea to implement the functionality as a part of the profile-page
+- block may be "expensive" in large moodleinstances with many users. instead of using a block it might be a good idea to implement the functionality as a part of the profile-page
+- configuration to be able to activate block also for student if performance is ok (e.g. small schools)
+- choose better colors
+- add some more languagestring to instead of hardcoded text
+- optimize code for enrollmentcheck
+- change form php to moodle-codestyle
+- correct some spelling mistake
+
+
 
 # Changelog #
 
+## [[v1.00]] ##
+- added some docúmentation
+- added configuration
+- only show content if block is in a course AND user is trainer
+- added delete-icon (can be activated or deactivated) 
+
+
 ## [[v0.92]] ##
-Adding startdate and enddate.
-Also colors indicates courses that 
-  are in progress --> green
-  are past -> red
-  are in the future --> blue
+- Adding startdate and enddate.
+- Also colors indicates courses that (are in progress --> green), (are past -> red), (are in the future --> blue)
 
 ## [[v0.91]] ##
 added letter after the coursename to indicate role
