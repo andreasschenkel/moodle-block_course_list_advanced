@@ -1,0 +1,17 @@
+{
+    "name": "andreasschenkel/moodle-block_course_list_advanced",
+    "type": "moodle-block",
+    "description": "course list advanced",
+    "homepage": "https://github.com/andreasschenkel/moodle-block_course_list_advanced",
+    "license": "GPL-3.0+",
+    "require": {
+        "composer/installers": "*"
+    },
+    "extra": {
+        "installer-name": "course_list_advanced"
+    },
+    "support": {
+        "issues": "https://github.com/andreasschenkel/moodle-block_course_list_advanced/issues",
+        "source": "https://github.com/andreasschenkel/moodle-block_course_list_advanced"
+    }
+}

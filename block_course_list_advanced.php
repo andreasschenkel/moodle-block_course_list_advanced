@@ -51,7 +51,13 @@ class block_course_list_advanced extends block_list
         $this->content->footer = '';
 
         // if not BOTH privileges then do not show content for performancereason. must be allowed to see course AND must be trainer 
-        if ( !(has_capability('block/course_list_advanced:view', $this->context) && has_capability('moodle/course:update', $this->context )) ) {
+        $isAllowedToSeeContent = false;
+        /**
+         * @todo optimize
+         */
+        $isAllowedToSeeContent = (has_capability('block/course_list_advanced:view', $this->context)
+            && has_capability('block/course_list_advanced:viewContent', $this->context));
+        if (!$isAllowedToSeeContent) {
             $this->title = get_string('blocktitlealt', 'block_course_list_advanced');
             $this->content->footer = get_string('blockfooteralt', 'block_course_list_advanced');
             return $this->content;
@@ -200,18 +206,14 @@ class block_course_list_advanced extends block_list
                             . "href=\"$CFG->wwwroot/course/delete.php?id=$course->id\">"
                             . $iconDeletion
                             . "</a>";
-                        
                     }
 
-                    $iconOrphanedFilesLink = 
-
-                    ' <i class="text-info" 
+                    $iconOrphanedFilesLink =
+                        ' <i class="text-info" 
                     data-toggle="tooltip" 
                     data-placement="right" 
                     title="Report über verwaiste Dateien" >
                     <i class="fa fa-server"></i> </i>';
-
-
 
                     $linkViewOrphanedFiles = '';
                     if ($usesphorphanedfiles) {
@@ -406,5 +408,35 @@ class block_course_list_advanced extends block_list
             'instance' => new stdClass(),
             'plugin' => $configs,
         ];
+    }
+
+    /**
+     * only show block in a course in order to prevent that the course is placed at frontpage or dashboard
+     * frontpage and dashboard are shown many times and the code is not jet optimized for large instances of moodle with many users
+     * @todo optimize
+     */
+    public function applicable_formats()
+    {
+        global $CFG;
+        
+        if ( $CFG->block_course_list_advanced_isallowedonfrontpage == true) {
+            $isallowedonfrontpage = true;
+        } else {
+            $isallowedonfrontpage = false;
+        }
+
+        if ( $CFG->block_course_list_advanced_isallowedonmypage == true) {
+            $isallowedonmypage = true;
+        } else {
+            $isallowedonmypage = false;
+        }
+
+        
+        return array(
+            'site-index' => $isallowedonfrontpage,
+            'my' => $isallowedonmypage,
+            'course-view' => true
+        );
+  
     }
 }

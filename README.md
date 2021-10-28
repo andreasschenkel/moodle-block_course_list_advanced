@@ -45,7 +45,7 @@ At the end of the block a list of all courses is shown where the usere is enroll
 - choose better colors
 - add some more languagestring to instead of hardcoded text
 - optimize code for enrollmentcheck
-- change form php to moodle-codestyle
+- change from php to moodle-codestyle
 - correct some spelling mistake
 
 
