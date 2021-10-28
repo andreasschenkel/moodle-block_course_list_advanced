@@ -35,10 +35,10 @@ $string['hideallcourseslink'] = 'Hide \'All courses\' link';
 $string['confighideallcourseslink'] = 'Remove the \'All courses\' link under the list of courses. (This setting does not affect the admin view.)';
 
 $string['showdeleteicon'] = 'Show a delete-icon to delete directly from the block.';
-$string['configshowdeleteicon'] = 'If set to true  an delete-icon is shown nearby the coursename in order to be able to delet the course directly from the block.';
+$string['configshowdeleteicon'] = 'If set to true a delete-icon is shown near the coursename in order to be able to delete the course directly from the block.';
 
-$string['usesphorphanedfiles'] = 'Use Plugin sphorphanedfiles (Plugin must be installed!)';
-$string['configusesphorphanedfiles'] = 'When activatet a ? as a link is shown to jump direktly to the List of orphaned files in this course.';
+$string['usesphorphanedfiles'] = 'Use Plugin orphanedfiles (Plugin must be installed!)';
+$string['configusesphorphanedfiles'] = 'When activated a ? as a link is shown to jump directly to the List of orphaned files in this course.';
 $string['course_list_advanced:view'] = 'Show block';
 
 $string['course_list_advanced:addinstance'] = 'Add a new courses block';
