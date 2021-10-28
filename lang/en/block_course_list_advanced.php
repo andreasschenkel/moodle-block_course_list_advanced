@@ -39,8 +39,14 @@ $string['configshowdeleteicon'] = 'If set to true a delete-icon is shown near th
 
 $string['usesphorphanedfiles'] = 'Use Plugin orphanedfiles (Plugin must be installed!)';
 $string['configusesphorphanedfiles'] = 'When activated a ? as a link is shown to jump directly to the List of orphaned files in this course.';
-$string['course_list_advanced:view'] = 'Show block';
 
+$string['isallowedonfrontpage'] = 'Allow to add block on the frontpage';
+$string['configisallowedonfrontpage'] = 'When activated it is allowed to add block to frontpage.';
+
+$string['isallowedonmypage'] = 'Allow to add block on the mypage';
+$string['configisallowedonmypage'] = 'When activated it is allowed to add block to mypage.';
+
+$string['course_list_advanced:view'] = 'Show block';
 $string['course_list_advanced:addinstance'] = 'Add a new courses block';
 $string['course_list_advanced:myaddinstance'] = 'Add a new courses block to Dashboard';
 
