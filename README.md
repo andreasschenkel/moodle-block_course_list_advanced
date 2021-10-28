@@ -33,24 +33,29 @@ note jet supported
 
 # Configure the block #
 
-![image](https://user-images.githubusercontent.com/31856043/139007295-62e27c76-1eb5-415f-9aab-8c9929968d17.png)
+![image](https://user-images.githubusercontent.com/31856043/139282339-eebfd9bc-fbe5-430d-98e8-0435aef41a48.png)
 
 
 
 At the end of the block a list of all courses is shown where the usere is enrolled as teacher.
 
 # ToDo #
-- block may be "expensive" in large moodleinstances with many users. instead of using a block it might be a good idea to implement the functionality as a part of the profile-page
-- configuration to be able to activate block also for student if performance is ok (e.g. small schools)
 - choose better colors
 - add some more languagestring to instead of hardcoded text
 - optimize code for enrollmentcheck
 - change from php to moodle-codestyle
 - correct some spelling mistake
+- block may be "expensive" in large moodleinstances with many users. instead of using a block it might be a good idea to implement the functionality as a part of the profile-page
 
 
 
 # Changelog #
+## [[v2.02]] ##
+- add config to be able to add block to frontpage  
+- add config to be able to add block to mypage
+- some merged corrections in languagefile
+
+
 ## [[v2.01]] ##
 only correcting the tag for the merge and release
 
