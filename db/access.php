@@ -31,7 +31,7 @@ $capabilities = array(
         'captype' => 'write',
         'contextlevel' => CONTEXT_SYSTEM,
         'archetypes' => array(
-            'user' => CAP_ALLOW
+            'user' => CAP_PREVENT
         ),
 
         'clonepermissionsfrom' => 'moodle/my:manageblocks'
@@ -51,6 +51,17 @@ $capabilities = array(
     ),
 
     'block/course_list_advanced:view' => array(
+        'riskbitmask' => RISK_SPAM | RISK_XSS,
+
+        'captype' => 'write',
+        'contextlevel' => CONTEXT_BLOCK,
+        'archetypes' => array(
+            'editingteacher' => CAP_ALLOW,
+            'student' => CAP_PREVENT,
+        )
+    ),
+
+    'block/course_list_advanced:viewContent' => array(
         'riskbitmask' => RISK_SPAM | RISK_XSS,
 
         'captype' => 'write',
