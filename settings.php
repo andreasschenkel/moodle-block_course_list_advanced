@@ -55,4 +55,20 @@ if ($ADMIN->fulltree) {
         get_string('configusesphorphanedfiles', 'block_course_list_advanced'),
         0
     ));
+
+    $settings->add(new admin_setting_configcheckbox(
+        'block_course_list_advanced_isallowedonfrontpage',
+        get_string('isallowedonfrontpage', 'block_course_list_advanced'),
+        get_string('configisallowedonfrontpage', 'block_course_list_advanced'),
+        0
+    ));
+
+    $settings->add(new admin_setting_configcheckbox(
+        'block_course_list_advanced_isallowedonmypage',
+        get_string('isallowedonmypage', 'block_course_list_advanced'),
+        get_string('configisallowedonmypage', 'block_course_list_advanced'),
+        0
+    ));
+
+
 }

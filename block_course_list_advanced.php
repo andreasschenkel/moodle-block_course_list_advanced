@@ -27,17 +27,17 @@ include_once($CFG->dirroot . '/course/lib.php');
 
 class block_course_list_advanced extends block_list
 {
-    function init()
+    public function init()
     {
         $this->title = get_string('pluginname', 'block_course_list_advanced');
     }
 
-    function has_config()
+    public function has_config()
     {
         return true;
     }
 
-    function get_content()
+    public function get_content()
     {
         global $CFG, $USER, $DB, $OUTPUT;
 
@@ -45,21 +45,32 @@ class block_course_list_advanced extends block_list
             return $this->content;
         }
 
-        $this->content = new stdClass(); //????
+        $this->content = new stdClass();
         $this->content->items = array();
         $this->content->icons = array();
         $this->content->footer = '';
 
         // if not BOTH privileges then do not show content for performancereason. must be allowed to see course AND must be trainer 
-        if ( !(has_capability('block/course_list_advanced:view', $this->context) && has_capability('moodle/course:update', $this->context )) ) {
+        $isAllowedToSeeContent = false;
+        /**
+         * @todo optimize
+         */
+        $isAllowedToSeeContent = (has_capability('block/course_list_advanced:view', $this->context)
+            && has_capability('block/course_list_advanced:viewContent', $this->context));
+        if (!$isAllowedToSeeContent) {
             $this->title = get_string('blocktitlealt', 'block_course_list_advanced');
             $this->content->footer = get_string('blockfooteralt', 'block_course_list_advanced');
             return $this->content;
         }
 
         $icon = $OUTPUT->pix_icon('i/course', get_string('course'));
-        $iconDeletion = $OUTPUT->pix_icon('i/delete', get_string('delete'));
+        $icon_delete = $OUTPUT->pix_icon('i/delete', get_string('delete'));
 
+
+
+        /**
+         * @todo put configuration into class (or function)
+         */
         $adminseesall = true;
         if (isset($CFG->block_course_list_advanced_adminview) && $CFG->block_course_list_advanced_adminview == 'own') {
             $adminseesall = false;
@@ -86,6 +97,9 @@ class block_course_list_advanced extends block_list
             empty($CFG->disablemycourses) and isloggedin() and !isguestuser() and
             !(has_capability('moodle/course:update', context_system::instance()) and $adminseesall)
         ) {
+            /**
+             * @todo put information into StdClass or array or class
+             */
             $listAllTrainerCourses = '';
             $listAllStudentCourses = '';
             $listAllNoneditingTeacherCourses = '';
@@ -93,7 +107,7 @@ class block_course_list_advanced extends block_list
             $countCoursesWithTrainer = 0;
             $countCoursesWithStudent = 0;
             $countCoursesWithNoneditingTeacher = 0;
-            $heute = time();
+            $heute = time();// @todo heute in today
             if ($courses = enrol_get_my_courses()) {
                 foreach ($courses as $course) {
                     $coursecontext = context_course::instance($course->id);
@@ -108,6 +122,9 @@ class block_course_list_advanced extends block_list
                         $endDate = get_string('noenddate', 'block_course_list_advanced') . ' ';
                     }
 
+                    /**
+                     * @todo auslagern in funktion
+                     */
                     $coursecss = '';
                     if ($course->startdate <= $heute) {
                         if ($course_record->enddate > $heute || !$course_record->enddate) {
@@ -189,29 +206,22 @@ class block_course_list_advanced extends block_list
                         . format_string(get_course_display_name_for_list($course))
                         . "</a>";
 
-                    $isallowedtodelete  = false;
-
                     // only if showdeleteicon is true, then we have to check, which courses are deletable and show a delete-icon
                     if ($showdeleteicon && is_enrolled($coursecontext, $USER, 'moodle/course:delete', $onlyactive = false)) {
-                        //$isallowedtodelete  = true;
                         $htmllinktocoursedeletion = "<a $linkcss style=\"color: #921616\" title=\""
                             . format_string($course->shortname, true, array('context' => $coursecontext))
                             . "\" "
                             . "href=\"$CFG->wwwroot/course/delete.php?id=$course->id\">"
-                            . $iconDeletion
+                            . $icon_delete
                             . "</a>";
-                        
                     }
 
-                    $iconOrphanedFilesLink = 
-
-                    ' <i class="text-info" 
+                    $iconOrphanedFilesLink =
+                        ' <i class="text-info" 
                     data-toggle="tooltip" 
                     data-placement="right" 
                     title="Report über verwaiste Dateien" >
                     <i class="fa fa-server"></i> </i>';
-
-
 
                     $linkViewOrphanedFiles = '';
                     if ($usesphorphanedfiles) {
@@ -399,12 +409,44 @@ class block_course_list_advanced extends block_list
         $configs = (object) [
             'adminview' => $CFG->block_course_list_advanced_adminview,
             'hideallcourseslink' => $CFG->block_course_list_advanced_hideallcourseslink,
-            'showdeleteicon' => $CFG->block_course_list_advanced_showdeleteicon
+            'showdeleteicon' => $CFG->block_course_list_advanced_showdeleteicon,
+            'isallowedonfrontpage' => $CFG->block_course_list_advanced_isallowedonfrontpage,
+            'isallowedonmypage' => $CFG->block_course_list_advanced_isallowedonmypage
         ];
 
         return (object) [
             'instance' => new stdClass(),
             'plugin' => $configs,
         ];
+    }
+
+    /**
+     * only show block in a course in order to prevent that the course is placed at frontpage or dashboard
+     * frontpage and dashboard are shown many times and the code is not jet optimized for large instances of moodle with many users
+     * @todo optimize
+     */
+    public function applicable_formats()
+    {
+        global $CFG;
+        
+        if ( $CFG->block_course_list_advanced_isallowedonfrontpage == true) {
+            $isallowedonfrontpage = true;
+        } else {
+            $isallowedonfrontpage = false;
+        }
+
+        if ( $CFG->block_course_list_advanced_isallowedonmypage == true) {
+            $isallowedonmypage = true;
+        } else {
+            $isallowedonmypage = false;
+        }
+
+        
+        return array(
+            'site-index' => $isallowedonfrontpage,
+            'my' => $isallowedonmypage,
+            'course-view' => true
+        );
+  
     }
 }
