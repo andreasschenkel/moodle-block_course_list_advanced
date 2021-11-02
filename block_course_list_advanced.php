@@ -93,6 +93,7 @@ class block_course_list_advanced extends block_list
 
         $countCoursesWithTrainer = 0;
         $countCoursesWithStudent = 0;
+        $countCoursesAll = 0;
         if (
             empty($CFG->disablemycourses) and isloggedin() and !isguestuser() and
             !(has_capability('moodle/course:update', context_system::instance()) and $adminseesall)
@@ -103,11 +104,22 @@ class block_course_list_advanced extends block_list
             $listAllTrainerCourses = '';
             $listAllStudentCourses = '';
             $listAllNoneditingTeacherCourses = '';
+            $listAllCourses = '';
 
             $countCoursesWithTrainer = 0;
             $countCoursesWithStudent = 0;
             $countCoursesWithNoneditingTeacher = 0;
-            $heute = time();// @todo heute in today
+            $countCoursesAll = 0;
+            $heute = time(); // @todo heute in today
+
+            if (is_siteadmin()) {
+                //$courses = $this->get_all_courses($limitcourseids);
+            }
+
+            // Wenn als admin schon ALLE course in $courses, dann wird erst gar nicht 
+            // enrol_get_my_courses() ausgeführt
+            // dann wird also 
+            //if ($courses || $courses = enrol_get_my_courses()) {
             if ($courses = enrol_get_my_courses()) {
                 foreach ($courses as $course) {
                     $coursecontext = context_course::instance($course->id);
@@ -251,6 +263,10 @@ class block_course_list_advanced extends block_list
                             . '</div></div>';
                         $countCoursesWithNoneditingTeacher++;
                     }
+                    if (is_siteadmin()) {
+                        $listAllCourses = $listAllCourses  . '<div ' . $linkcss . '>' . '<div ' . $coursecss . '>' . $htmllinktocourse .  '  ' .  $linkViewOrphanedFiles . '  ' . $htmllinktocoursedeletion . ' ' . $roles . '<br>' . $duration . '</div></div>';
+                        $countCoursesAll++;
+                    }
                 }
                 //$this->title = get_string('mycourses');
                 $this->title = get_string('blocktitle', 'block_course_list_advanced');
@@ -280,6 +296,11 @@ class block_course_list_advanced extends block_list
             if ($countCoursesWithNoneditingTeacher) {
                 $this->content->items[] = '<div class="course_list_advanced">' .  $countCoursesWithNoneditingTeacher . ' ' . get_string('headlinenoneditingteacher', 'block_course_list_advanced') . '</div>';
                 $this->content->items[] = $listAllNoneditingTeacherCourses . '<br />';
+            }
+
+            if ($countCoursesAll) {
+                $this->content->items[] = '<div class="course_list_advanced">' .  $countCoursesAll . ' ' . get_string('headlinenallcourses', 'block_course_list_advanced') . '</div>';
+                $this->content->items[] = $listAllCourses . '<br />';
             }
 
 
@@ -428,25 +449,24 @@ class block_course_list_advanced extends block_list
     public function applicable_formats()
     {
         global $CFG;
-        
-        if ( $CFG->block_course_list_advanced_isallowedonfrontpage == true) {
+
+        if ($CFG->block_course_list_advanced_isallowedonfrontpage == true) {
             $isallowedonfrontpage = true;
         } else {
             $isallowedonfrontpage = false;
         }
 
-        if ( $CFG->block_course_list_advanced_isallowedonmypage == true) {
+        if ($CFG->block_course_list_advanced_isallowedonmypage == true) {
             $isallowedonmypage = true;
         } else {
             $isallowedonmypage = false;
         }
 
-        
+
         return array(
             'site-index' => $isallowedonfrontpage,
             'my' => $isallowedonmypage,
             'course-view' => true
         );
-  
     }
 }
