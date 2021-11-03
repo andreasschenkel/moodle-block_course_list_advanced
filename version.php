@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Version details
+ * This plugin is based on the original moodle block course_list and adds some functionality.
  *
  * @package    block_course_list_advanced
  * @copyright  1999 onwards Martin Dougiamas (http://dougiamas.com)
