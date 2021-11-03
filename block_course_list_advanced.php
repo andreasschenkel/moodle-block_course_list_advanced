@@ -113,20 +113,24 @@ class block_course_list_advanced extends block_list
             $heute = time(); // @todo heute in today
 
             if (is_siteadmin()) {
-                //$courses = $this->get_all_courses($limitcourseids);
+                /**
+                 * @todo get list of ALL courses because user is admin
+                 */
+                //$handler = new Handler();
+                //$allcourses = $handler->getAllCoursesBySelect();
+                $courses = $this->getAllCoursesBySelect();
+                //die();
+            } else {
+                $courses = enrol_get_my_courses();
             }
 
-            // Wenn als admin schon ALLE course in $courses, dann wird erst gar nicht 
-            // enrol_get_my_courses() ausgeführt
-            // dann wird also 
-            //if ($courses || $courses = enrol_get_my_courses()) {
-            if ($courses = enrol_get_my_courses()) {
+            if ($courses ) {
                 foreach ($courses as $course) {
                     $coursecontext = context_course::instance($course->id);
                     $linkcss = $course->visible ? "" : " class=\"dimmed\" ";
                     $startDate =  date('d/m/Y', $course->startdate);
 
-                    //to check enddate do not use course->enddate
+                    // course->enddate is empty if function enrol_get_my_courses() was used;
                     $course_record =  $DB->get_record('course', array('id' => $course->id));
                     if ($course_record->enddate) {
                         $endDate =  date('d/m/Y', $course_record->enddate);
@@ -138,7 +142,8 @@ class block_course_list_advanced extends block_list
                      * @todo auslagern in funktion
                      */
                     $coursecss = '';
-                    if ($course->startdate <= $heute) {
+                    //if ($course->startdate <= $heute) {
+                    if ($course_record->startdate <= $heute) {
                         if ($course_record->enddate > $heute || !$course_record->enddate) {
                             $coursecss = 'class="coursecssactiv"';
                         } elseif ($course_record->enddate < $heute) {
@@ -268,8 +273,13 @@ class block_course_list_advanced extends block_list
                         $countCoursesAll++;
                     }
                 }
-                //$this->title = get_string('mycourses');
-                $this->title = get_string('blocktitle', 'block_course_list_advanced');
+
+                $title = '';
+                $title = get_string('blocktitle', 'block_course_list_advanced');
+                if (is_siteadmin()) {
+                    $title = $title . ' (Adminmodus)';
+                }
+                $this->title = $title;
                 /// If we can update any course of the view all isn't hidden, show the view all courses link
                 if ($allcourselink) {
                     $this->content->footer = "<a href=\"$CFG->wwwroot/course/index.php\">"
@@ -469,4 +479,15 @@ class block_course_list_advanced extends block_list
             'course-view' => true
         );
     }
+
+
+    public function getAllCoursesBySelect(): array
+    {
+        global $DB;
+
+        $query = "SELECT id, fullname, shortname, startdate, enddate from {course}";
+        $courselist = $DB->get_records_sql($query);
+        return $courselist;
+    }
+
 }
