@@ -59,3 +59,9 @@ $string['headlinenoneditingteacher'] = '<b>Course(s) - trainer nonediting</b>';
 $string['headlinenallcourses'] = '<b>Course(s) - all</b>';
 
 $string['noenddate'] = 'open';
+
+$string['tooltipptextstudent'] = 'student (reviewmyattempts)';
+$string['tooltipptextstudentindicator'] = 'S';
+$string['tooltipptexteditingteacher'] = 'editingteacher: capability moodle/course:manageactivities';
+$string['tooltipptexteditingteacherindicator'] = 'T';
+$string['tooltipptextsphorphanedfiles'] = 'Report orphened files';

@@ -24,6 +24,8 @@
  */
 
 include_once($CFG->dirroot . '/course/lib.php');
+//include 'classes/config_handler.php';
+include 'config_handler.php';
 
 class block_course_list_advanced extends block_list
 {
@@ -50,11 +52,10 @@ class block_course_list_advanced extends block_list
         $this->content->icons = array();
         $this->content->footer = '';
 
+        $configHandler = new config_handler($CFG);
+
         // if not BOTH privileges then do not show content for performancereason. must be allowed to see course AND must be trainer 
         $isAllowedToSeeContent = false;
-        /**
-         * @todo optimize
-         */
         $isAllowedToSeeContent = (has_capability('block/course_list_advanced:view', $this->context)
             && has_capability('block/course_list_advanced:viewContent', $this->context));
         if (!$isAllowedToSeeContent) {
@@ -66,37 +67,17 @@ class block_course_list_advanced extends block_list
         $icon = $OUTPUT->pix_icon('i/course', get_string('course'));
         $icon_delete = $OUTPUT->pix_icon('i/delete', get_string('delete'));
 
-
-
-        /**
-         * @todo put configuration into class (or function)
-         */
-        $adminseesall = true;
-        if (isset($CFG->block_course_list_advanced_adminview) && $CFG->block_course_list_advanced_adminview == 'own') {
-            $adminseesall = false;
-        }
-
-        $showdeleteicon = false;
-        if (isset($CFG->block_course_list_advanced_showdeleteicon) && $CFG->block_course_list_advanced_showdeleteicon == true) {
-            $showdeleteicon = true;
-        }
-
-        $usesphorphanedfiles = false;
-        if (isset($CFG->block_course_list_advanced_showdeleteicon) && $CFG->block_course_list_advanced_usesphorphanedfiles == true) {
-            $usesphorphanedfiles = true;
-        }
-
         $allcourselink =
             (has_capability('moodle/course:update', context_system::instance())
                 || empty($CFG->block_course_list_hideallcourseslink)) &&
             core_course_category::user_top();
 
-        $countCoursesWithTrainer = 0;
+        $countCoursesEditingTeacher = 0;
         $countCoursesWithStudent = 0;
         $countCoursesAll = 0;
         if (
             empty($CFG->disablemycourses) and isloggedin() and !isguestuser() and
-            !(has_capability('moodle/course:update', context_system::instance()) and $adminseesall)
+            !(has_capability('moodle/course:update', context_system::instance()) and $configHandler->getAdminseesall())
         ) {
             /**
              * @todo put information into StdClass or array or class
@@ -106,25 +87,19 @@ class block_course_list_advanced extends block_list
             $listAllNoneditingTeacherCourses = '';
             $listAllCourses = '';
 
-            $countCoursesWithTrainer = 0;
+            $countCoursesEditingTeacher = 0;
             $countCoursesWithStudent = 0;
-            $countCoursesWithNoneditingTeacher = 0;
+            $countCoursesNoneditingTeacher = 0;
             $countCoursesAll = 0;
-            $heute = time(); // @todo heute in today
+            $now = time();
 
             if (is_siteadmin()) {
-                /**
-                 * @todo get list of ALL courses because user is admin
-                 */
-                //$handler = new Handler();
-                //$allcourses = $handler->getAllCoursesBySelect();
                 $courses = $this->getAllCoursesBySelect();
-                //die();
             } else {
                 $courses = enrol_get_my_courses();
             }
 
-            if ($courses ) {
+            if ($courses) {
                 foreach ($courses as $course) {
                     $coursecontext = context_course::instance($course->id);
                     $linkcss = $course->visible ? "" : " class=\"dimmed\" ";
@@ -142,11 +117,11 @@ class block_course_list_advanced extends block_list
                      * @todo auslagern in funktion
                      */
                     $coursecss = '';
-                    //if ($course->startdate <= $heute) {
-                    if ($course_record->startdate <= $heute) {
-                        if ($course_record->enddate > $heute || !$course_record->enddate) {
+                    //if ($course->startdate <= $now) {
+                    if ($course_record->startdate <= $now) {
+                        if ($course_record->enddate > $now || !$course_record->enddate) {
                             $coursecss = 'class="coursecssactiv"';
-                        } elseif ($course_record->enddate < $heute) {
+                        } elseif ($course_record->enddate < $now) {
                             $coursecss = 'class="coursecssfinished"';
                         }
                     } else {
@@ -178,37 +153,28 @@ class block_course_list_advanced extends block_list
                     foreach ($editingteachers as $teacher) {
                         if ($USER->username === $teacher->username) {
                             $isEditingTeacher = true;
-                            $roles = $roles
-                                . ' <i class="text-info" 
-                                data-toggle="tooltip" 
-                                data-placement="right" 
-                                title="Trainer: capability moodle/course:manageactivities" >
-                                <font color="red">T</font></i>';
+                            $roles = $roles . " " . $this->createRoleIndicator(
+                                get_string('tooltipptexteditingteacher', 'block_course_list_advanced'),
+                                get_string('tooltipptexteditingteacherindicator', 'block_course_list_advanced'),
+                                'ff0000'
+                            );
                             break;
                         }
                     }
 
-                    /**
-                     * now proof if user is student
-                     */
-                    $isStudent = false;
-                    if (is_enrolled($coursecontext, $USER, 'mod/quiz:reviewmyattempts', $onlyactive = false)) {
-                        $isStudent = true;
-                        $roles = $roles . ' <i class="text-info" '
-                            . 'data-toggle="tooltip" '
-                            . 'data-placement="right" '
-                            . 'title="Schüler:in (reviewmyattempts)" ><font color="blue">S</font></i>';
+                    $isStudent = is_enrolled($coursecontext, $USER, 'mod/quiz:reviewmyattempts', $onlyactive = false) == true ? true : false;
+                    if ($isStudent) {
+                        $roles = $roles . " " . $this->createRoleIndicator(
+                            get_string('tooltipptextstudent', 'block_course_list_advanced'),
+                            get_string('tooltipptextstudentindicator', 'block_course_list_advanced'),
+                            '0000ff'
+                        );
                     }
 
-                    /**
-                     * now proof if user is isNoneditingTeacher
-                     */
-                    $isNoneditingTeacher = false;
-                    if (
-                        !is_enrolled($coursecontext, $USER, 'moodle/course:changecategory', $onlyactive = false)
-                        &&  is_enrolled($coursecontext, $USER, 'moodle/course:markcomplete', $onlyactive = false)
-                    ) {
-                        $isNoneditingTeacher = true;
+                    $isNoneditingTeacher = !is_enrolled($coursecontext, $USER, 'moodle/course:changecategory', $onlyactive = false)
+                        &&  is_enrolled($coursecontext, $USER, 'moodle/course:markcomplete', $onlyactive = false) == true ? true : false;
+
+                    if ($isNoneditingTeacher) {
                         $roles = $roles
                             . '  <i class="text-info" data-toggle="tooltip" data-placement="right" title="nonediting Teacher (changecategory)" ><font color="green">T</font></i>';
                     }
@@ -224,7 +190,7 @@ class block_course_list_advanced extends block_list
                         . "</a>";
 
                     // only if showdeleteicon is true, then we have to check, which courses are deletable and show a delete-icon
-                    if ($showdeleteicon && is_enrolled($coursecontext, $USER, 'moodle/course:delete', $onlyactive = false)) {
+                    if ($configHandler->getShowdeleteicon() && is_enrolled($coursecontext, $USER, 'moodle/course:delete', $onlyactive = false)) {
                         $htmllinktocoursedeletion = "<a $linkcss style=\"color: #921616\" title=\""
                             . format_string($course->shortname, true, array('context' => $coursecontext))
                             . "\" "
@@ -233,22 +199,17 @@ class block_course_list_advanced extends block_list
                             . "</a>";
                     }
 
-                    $iconOrphanedFilesLink =
-                        ' <i class="text-info" 
-                    data-toggle="tooltip" 
-                    data-placement="right" 
-                    title="Report über verwaiste Dateien" >
-                    <i class="fa fa-server"></i> </i>';
+                    $iconOrphanedFilesLink = $this->createRoleIndicator(get_string('tooltipptextsphorphanedfiles', 'block_course_list_advanced'), ' <i class="fa fa-server"></i>', '008800');
 
                     $linkViewOrphanedFiles = '';
-                    if ($usesphorphanedfiles) {
+                    if ($configHandler->getUsesphorphanedfiles()) {
                         $orphanedFilesLink = new moodle_url('/report/sphorphanedfiles/index.php', array('id' => $course->id));
                         $linkViewOrphanedFiles = '<a href="' . $orphanedFilesLink . '">  ' . $iconOrphanedFilesLink . '</a>';
                     }
 
                     if ($isEditingTeacher) {
                         $listAllTrainerCourses = $listAllTrainerCourses  . '<div ' . $linkcss . '>' . '<div ' . $coursecss . '>' . $htmllinktocourse .  '  ' .  $linkViewOrphanedFiles . '  ' . $htmllinktocoursedeletion . ' ' . $roles . '<br>' . $duration . '</div></div>';
-                        $countCoursesWithTrainer++;
+                        $countCoursesEditingTeacher++;
                     }
                     if ($isStudent) {
                         $listAllStudentCourses = $listAllStudentCourses . '<div ' . $linkcss . '>' . '<div ' . $coursecss . '>' . $htmllinktocourse .  '  ' . $roles . '<br>' . $duration . '</div></div>';
@@ -266,7 +227,7 @@ class block_course_list_advanced extends block_list
                             . '<br>'
                             . $duration
                             . '</div></div>';
-                        $countCoursesWithNoneditingTeacher++;
+                        $countCoursesNoneditingTeacher++;
                     }
                     if (is_siteadmin()) {
                         $listAllCourses = $listAllCourses  . '<div ' . $linkcss . '>' . '<div ' . $coursecss . '>' . $htmllinktocourse .  '  ' .  $linkViewOrphanedFiles . '  ' . $htmllinktocoursedeletion . ' ' . $roles . '<br>' . $duration . '</div></div>';
@@ -287,9 +248,9 @@ class block_course_list_advanced extends block_list
                         . "</a> ...";
                 }
             }
-            if ($countCoursesWithTrainer) {
+            if ($countCoursesEditingTeacher) {
                 $this->content->items[] = '<div class="course_list_advanced">'
-                    . $countCoursesWithTrainer
+                    . $countCoursesEditingTeacher
                     . ' '
                     . get_string('headlineteacher', 'block_course_list_advanced')
                     . '</div>';
@@ -303,8 +264,8 @@ class block_course_list_advanced extends block_list
                     . '</div>';
                 $this->content->items[] = $listAllStudentCourses . '<br />';
             }
-            if ($countCoursesWithNoneditingTeacher) {
-                $this->content->items[] = '<div class="course_list_advanced">' .  $countCoursesWithNoneditingTeacher . ' ' . get_string('headlinenoneditingteacher', 'block_course_list_advanced') . '</div>';
+            if ($countCoursesNoneditingTeacher) {
+                $this->content->items[] = '<div class="course_list_advanced">' .  $countCoursesNoneditingTeacher . ' ' . get_string('headlinenoneditingteacher', 'block_course_list_advanced') . '</div>';
                 $this->content->items[] = $listAllNoneditingTeacherCourses . '<br />';
             }
 
@@ -312,8 +273,6 @@ class block_course_list_advanced extends block_list
                 $this->content->items[] = '<div class="course_list_advanced">' .  $countCoursesAll . ' ' . get_string('headlinenallcourses', 'block_course_list_advanced') . '</div>';
                 $this->content->items[] = $listAllCourses . '<br />';
             }
-
-
 
             $this->get_remote_courses();
             if ($this->content->items) { // make sure we don't return an empty list
@@ -459,23 +418,10 @@ class block_course_list_advanced extends block_list
     public function applicable_formats()
     {
         global $CFG;
-
-        if ($CFG->block_course_list_advanced_isallowedonfrontpage == true) {
-            $isallowedonfrontpage = true;
-        } else {
-            $isallowedonfrontpage = false;
-        }
-
-        if ($CFG->block_course_list_advanced_isallowedonmypage == true) {
-            $isallowedonmypage = true;
-        } else {
-            $isallowedonmypage = false;
-        }
-
-
+        $configHandler = new config_handler($CFG);
         return array(
-            'site-index' => $isallowedonfrontpage,
-            'my' => $isallowedonmypage,
+            'site-index' => $configHandler->getIsallowedonfrontpage(),
+            'my' => $configHandler->getIsallowedonmypage(),
             'course-view' => true
         );
     }
@@ -485,9 +431,16 @@ class block_course_list_advanced extends block_list
     {
         global $DB;
 
-        $query = "SELECT id, fullname, shortname, startdate, enddate from {course}";
+        $query = "SELECT id, fullname, shortname, startdate, enddate, visible from {course}";
         $courselist = $DB->get_records_sql($query);
         return $courselist;
     }
 
+    /**
+     * @var $color string like #ff0000
+     */
+    public function createRoleIndicator($title, $shortcut, $color): string
+    {
+        return "<i class='text-info' data-toggle='tooltip' data-placement='bottom' title='$title' > <font color='$color'>$shortcut</font></i>";
+    }
 }
