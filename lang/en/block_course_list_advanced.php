@@ -56,5 +56,12 @@ $string['privacy:metadata'] = 'The Courses block only shows data about courses a
 $string['headlineteacher'] = '<b>Course(s) - trainer</b>';
 $string['headlinestudent'] = '<b>Course(s) - student</b>';
 $string['headlinenoneditingteacher'] = '<b>Course(s) - trainer nonediting</b>';
+$string['headlinenallcourses'] = '<b>Course(s) - all</b>';
+
 $string['noenddate'] = 'open';
 
+$string['tooltipptextstudent'] = 'student (reviewmyattempts)';
+$string['tooltipptextstudentindicator'] = 'S';
+$string['tooltipptexteditingteacher'] = 'editingteacher: capability moodle/course:manageactivities';
+$string['tooltipptexteditingteacherindicator'] = 'T';
+$string['tooltipptextsphorphanedfiles'] = 'Report orphened files';

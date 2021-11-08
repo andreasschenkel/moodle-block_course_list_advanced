@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Version details
+ * This plugin is based on the original moodle block course_list and adds some functionality.
  *
  * @package    block_course_list_advanced
  * @copyright  1999 onwards Martin Dougiamas (http://dougiamas.com)
@@ -25,6 +25,6 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2021102806;        // The current plugin version (Date: YYYYMMDDXX)
+$plugin->version   = 2021110801;        // The current plugin version (Date: YYYYMMDDXX)
 $plugin->requires  = 2020060900;        // Requires this Moodle version
 $plugin->component = 'block_course_list_advanced'; // Full name of the plugin (used for diagnostics)

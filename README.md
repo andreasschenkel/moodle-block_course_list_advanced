@@ -50,6 +50,12 @@ At the end of the block a list of all courses is shown where the usere is enroll
 
 
 # Changelog #
+## [[v2.0.3]] ##
+- add list of all moodle courses is is_siteadmin
+- some refactoring
+- first very small unit tests
+
+
 ## [[v2.02]] ##
 - add config to be able to add block to frontpage  
 - add config to be able to add block to mypage

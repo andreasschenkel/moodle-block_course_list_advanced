@@ -56,7 +56,12 @@ $string['privacy:metadata'] = 'Der Block Kursliste erweitert zeigt nur Daten üb
 $string['headlineteacher'] = '<b>Kurs(e) - Lehrende</b>';
 $string['headlinestudent'] = '<b>Kurs(e) - Teilnehmer</b>';
 $string['headlinenoneditingteacher'] = '<b>Kurs(e) - Lehrende o Bearbeitung</b>';
+$string['headlinenallcourses'] = '<b>Kurs(e) - Alle</b>';
+
 $string['noenddate'] = 'offen';
 
-
-
+$string['tooltipptextstudent'] = 'Schüler:in (reviewmyattempts)';
+$string['tooltipptextstudentindicator'] = 'S';
+$string['tooltipptexteditingteacher'] = 'Trainer: capability moodle/course:manageactivities';
+$string['tooltipptexteditingteacherindicator'] = 'T';
+$string['tooltipptextsphorphanedfiles'] = 'Bericht über verwaiste Dateien';
