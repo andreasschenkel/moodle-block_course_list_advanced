@@ -24,8 +24,7 @@
  */
 
 include_once($CFG->dirroot . '/course/lib.php');
-//include 'classes/config_handler.php';
-include 'config_handler.php';
+use block_course_list_advanced\config_handler;
 
 class block_course_list_advanced extends block_list
 {
