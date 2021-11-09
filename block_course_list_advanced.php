@@ -228,7 +228,8 @@ class block_course_list_advanced extends block_list
                             . '</div></div>';
                         $countCoursesNoneditingTeacher++;
                     }
-                    if (is_siteadmin()) {
+
+                    if (is_siteadmin() && $countCoursesAll <= $configHandler->getMax_for_siteadmin()) {
                         $listAllCourses = $listAllCourses  . '<div ' . $linkcss . '>' . '<div ' . $coursecss . '>' . $htmllinktocourse .  '  ' .  $linkViewOrphanedFiles . '  ' . $htmllinktocoursedeletion . ' ' . $roles . '<br>' . $duration . '</div></div>';
                         $countCoursesAll++;
                     }
@@ -237,7 +238,8 @@ class block_course_list_advanced extends block_list
                 $title = '';
                 $title = get_string('blocktitle', 'block_course_list_advanced');
                 if (is_siteadmin()) {
-                    $title = $title . ' (Adminmodus)';
+
+                    $title = 'Adminmodus' ;
                 }
                 $this->title = $title;
                 /// If we can update any course of the view all isn't hidden, show the view all courses link
@@ -269,7 +271,12 @@ class block_course_list_advanced extends block_list
             }
 
             if ($countCoursesAll) {
-                $this->content->items[] = '<div class="course_list_advanced">' .  $countCoursesAll . ' ' . get_string('headlinenallcourses', 'block_course_list_advanced') . '</div>';
+                $this->content->items[] = '<div class="course_list_advanced">' 
+                    .  $countCoursesAll . ' ' 
+                    . get_string('headlinenallcourses', 'block_course_list_advanced') 
+                    . ' (max. '
+                    . $configHandler->getMax_for_siteadmin()
+                    . ')</div>';
                 $this->content->items[] = $listAllCourses . '<br />';
             }
 
