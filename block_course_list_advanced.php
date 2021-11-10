@@ -238,7 +238,6 @@ class block_course_list_advanced extends block_list
                 $title = '';
                 $title = get_string('blocktitle', 'block_course_list_advanced');
                 if (is_siteadmin()) {
-
                     $title = 'Adminmodus' ;
                 }
                 $this->title = $title;
