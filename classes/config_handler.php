@@ -44,6 +44,14 @@ class config_handler
      */
     private $usesphorphanedfiles = false;
 
+    /**
+     * @var int
+     */
+    private $max_for_siteadmin = 22;
+
+
+    
+
     public function __construct(stdClass $config)
     {
 
@@ -69,6 +77,10 @@ class config_handler
 
         if (isset($config->block_course_list_advanced_usesphorphanedfiles)) {
             $this->usesphorphanedfiles = $config->block_course_list_advanced_usesphorphanedfiles == true ? true : false;
+        }
+
+        if (isset($config->block_course_list_advanced_max_for_siteadmin)) {
+            $this->max_for_siteadmin = $config->block_course_list_advanced_max_for_siteadmin;
         }
 
     }
@@ -125,8 +137,18 @@ class config_handler
      *
      * @return  bool
      */ 
-    public function getUsesphorphanedfiles()
+    public function getUsesphorphanedfiles(): bool
     {
         return $this->usesphorphanedfiles;
+    }
+
+    /**
+     * Get the value of maxforsiteadmin
+     *
+     * @return  int
+     */ 
+    public function getMax_for_siteadmin(): int
+    {
+        return $this->max_for_siteadmin;
     }
 }
