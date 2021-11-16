@@ -49,9 +49,6 @@ class config_handler
      */
     private $max_for_siteadmin = 22;
 
-
-    
-
     public function __construct(stdClass $config)
     {
 
@@ -60,23 +57,23 @@ class config_handler
         }
 
         if (isset($config->block_course_list_advanced_hideallcourseslink)) {
-            $this->hideallcourseslink = $config->block_course_list_advanced_hideallcourseslink == true ? true : false;
+            $this->hideallcourseslink = $config->block_course_list_advanced_hideallcourseslink ? true : false;
         }
 
         if (isset($config->block_course_list_advanced_showdeleteicon)) {
-            $this->showdeleteicon = $config->block_course_list_advanced_showdeleteicon == true ? true : false;
+            $this->showdeleteicon = $config->block_course_list_advanced_showdeleteicon ? true : false;
         }
 
         if (isset($config->block_course_list_advanced_isallowedonfrontpage)) {
-            $this->isallowedonfrontpage = $config->block_course_list_advanced_isallowedonfrontpage == true ? true : false;
+            $this->isallowedonfrontpage = $config->block_course_list_advanced_isallowedonfrontpage ? true : false;
         }
 
         if (isset($config->block_course_list_advanced_isallowedonmypage)) {
-            $this->isallowedonmypage = $config->block_course_list_advanced_isallowedonmypage == true ? true : false;
+            $this->isallowedonmypage = $config->block_course_list_advanced_isallowedonmypage ? true : false;
         }
 
         if (isset($config->block_course_list_advanced_usesphorphanedfiles)) {
-            $this->usesphorphanedfiles = $config->block_course_list_advanced_usesphorphanedfiles == true ? true : false;
+            $this->usesphorphanedfiles = $config->block_course_list_advanced_usesphorphanedfiles ? true : false;
         }
 
         if (isset($config->block_course_list_advanced_max_for_siteadmin)) {
@@ -84,8 +81,6 @@ class config_handler
         }
 
     }
-
-
 
     /**
      * Get the value of adminview
@@ -103,7 +98,6 @@ class config_handler
         return $this->hideallcourseslink;
     }
 
-
     /**
      * Get the value of showdeleteicon
      */
@@ -120,7 +114,6 @@ class config_handler
         return $this->isallowedonfrontpage;
     }
 
-
     /**
      * Get the value of isallowedonmypage
      */
@@ -128,9 +121,6 @@ class config_handler
     {
         return $this->isallowedonmypage;
     }
-
-    
-
 
     /**
      * Get the value of usesphorphanedfiles

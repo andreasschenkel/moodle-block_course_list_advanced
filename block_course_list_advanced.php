@@ -75,8 +75,8 @@ class block_course_list_advanced extends block_list
         $countCoursesWithStudent = 0;
         $countCoursesAll = 0;
         if (
-            empty($CFG->disablemycourses) and isloggedin() and !isguestuser() and
-            !(has_capability('moodle/course:update', context_system::instance()) and $configHandler->getAdminseesall())
+            empty($CFG->disablemycourses) && isloggedin() && !isguestuser() &&
+            !(has_capability('moodle/course:update', context_system::instance()) && $configHandler->getAdminseesall())
         ) {
             /**
              * @todo put information into StdClass or array or class
@@ -128,23 +128,18 @@ class block_course_list_advanced extends block_list
                     }
 
                     /**
-                     * @todo check if this could be used for a better implementation 
-                     */
-                    // $roles = get_user_roles($coursecontext, $USER->id, false);
-                    // echo "<br>Kursid " . $course->id ;
-                    // var_dump($roles);
-                    // foreach ($roles as $dummy) {
-                    //    $role = key($roles);
-                    //    $rolename = $roles[$role]->shortname;
-                    //    echo "  " . $rolename . "; ";
-                    // }
-
-
-                    /**
                      * getting all users with moodle/course:manageactivities. 
                      * This should be all user with role teacher (without noneditingteacher)
                      * @todo implement better way to find role of the user in the course
                      * @todo see at https://docs.moodle.org/dev/NEWMODULE_Adding_capabilities
+                     *                   // $roles = get_user_roles($coursecontext, $USER->id, false);
+                     * @todo check if this could be used for a better implementation 
+                     * echo "<br>Kursid " . $course->id ;
+                     * var_dump($roles);
+                     * foreach ($roles as $dummy) {
+                     *    $role = key($roles);
+                     *    $rolename = $roles[$role]->shortname;
+                     *    echo "  " . $rolename . "; ";
                      */
                     $editingteachers = get_users_by_capability($coursecontext, 'moodle/course:manageactivities');
                     $isEditingTeacher = false;
@@ -161,7 +156,7 @@ class block_course_list_advanced extends block_list
                         }
                     }
 
-                    $isStudent = is_enrolled($coursecontext, $USER, 'mod/quiz:reviewmyattempts', $onlyactive = false) == true ? true : false;
+                    $isStudent = is_enrolled($coursecontext, $USER, 'mod/quiz:reviewmyattempts', $onlyactive = false) ? true : false;
                     if ($isStudent) {
                         $roles = $roles . " " . $this->createRoleIndicator(
                             get_string('tooltipptextstudent', 'block_course_list_advanced'),
@@ -171,7 +166,7 @@ class block_course_list_advanced extends block_list
                     }
 
                     $isNoneditingTeacher = !is_enrolled($coursecontext, $USER, 'moodle/course:changecategory', $onlyactive = false)
-                        &&  is_enrolled($coursecontext, $USER, 'moodle/course:markcomplete', $onlyactive = false) == true ? true : false;
+                        &&  is_enrolled($coursecontext, $USER, 'moodle/course:markcomplete', $onlyactive = false) ? true : false;
 
                     if ($isNoneditingTeacher) {
                         $roles = $roles
@@ -288,7 +283,7 @@ class block_course_list_advanced extends block_list
         // User is not enrolled in any courses, show list of available categories or courses (if there is only one category).
         $topcategory = core_course_category::top();
         if ($topcategory->is_uservisible() && ($categories = $topcategory->get_children())) { // Check we have categories.
-            if (count($categories) > 1 || (count($categories) == 1 && $DB->count_records('course') > 200)) {
+            if (count($categories) > 1 || (count($categories) === 1 && $DB->count_records('course') > 200)) {
                 // Just print top level category links
                 foreach ($categories as $category) {
                     $categoryname = $category->get_formatted_name();
