@@ -70,7 +70,7 @@ if ($ADMIN->fulltree) {
         0
     ));
 
-    $options = array(5=>'5', 10=>'10', 20=>'20', 30=>'30', 40=>'40', 50=>'50', 100=>'100', 10000=>'10000');
+    $options = array(5 => '5', 10 => '10', 20 => '20', 30 => '30', 40 => '40', 50 => '50', 100 => '100', 10000 => '10000');
 
     $settings->add(new admin_setting_configselect(
         'block_course_list_advanced_max_for_siteadmin',
