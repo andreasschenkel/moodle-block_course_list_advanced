@@ -1,17 +1,24 @@
 <?php
-/**
- * Course list advanced block.
- *
- * @package  
- * @copyright
- * @author     Andreas Schenkel - Schulportal Hessen 2021
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace block_course_list_advanced;
+defined('MOODLE_INTERNAL') || die();
 use stdClass;
 
-class config_handler
+class confighandler
 {
     /**
      * @var bool
@@ -37,7 +44,7 @@ class config_handler
      * @var bool
      */
     private $isallowedonmypage = false;
-    
+
     /**
      * @var bool
      */
@@ -46,11 +53,9 @@ class config_handler
     /**
      * @var int
      */
-    private $max_for_siteadmin = 22;
+    private $maxforsiteadmin = 22;
 
-    public function __construct(stdClass $config)
-    {
-
+    public function __construct(stdClass $config) {
         if (isset($config->block_course_list_advanced_adminview)) {
             $this->adminseesall = $config->block_course_list_advanced_adminview == 'own' ? false : true;
         }
@@ -75,8 +80,8 @@ class config_handler
             $this->usesphorphanedfiles = $config->block_course_list_advanced_usesphorphanedfiles ? true : false;
         }
 
-        if (isset($config->block_course_list_advanced_max_for_siteadmin)) {
-            $this->max_for_siteadmin = $config->block_course_list_advanced_max_for_siteadmin;
+        if (isset($config->block_course_list_advanced_maxforsiteadmin)) {
+            $this->maxforsiteadmin = $config->block_course_list_advanced_maxforsiteadmin;
         }
 
     }
@@ -84,50 +89,43 @@ class config_handler
     /**
      * Get the value of adminview
      */
-    public function getAdminseesall(): bool
-    {
+    public function getadminseesall(): bool {
         return $this->adminseesall;
     }
 
     /**
      * Get the value of hideallcourseslink
      */
-    public function getHideallcourseslink(): bool
-    {
+    public function gethideallcourseslink(): bool {
         return $this->hideallcourseslink;
     }
 
     /**
      * Get the value of showdeleteicon
      */
-    public function getShowdeleteicon(): bool
-    {
+    public function get_showdeleteicon(): bool {
         return $this->showdeleteicon;
     }
 
     /**
      * Get the value of isallowedonfrontpage
      */
-    public function getIsallowedonfrontpage(): bool
-    {
+    public function get_isallowedonfrontpage(): bool {
         return $this->isallowedonfrontpage;
     }
 
     /**
      * Get the value of isallowedonmypage
      */
-    public function getIsallowedonmypage(): bool
-    {
+    public function get_isallowedonmypage(): bool {
         return $this->isallowedonmypage;
     }
 
     /**
      * Get the value of usesphorphanedfiles
-     *
      * @return  bool
-     */ 
-    public function getUsesphorphanedfiles(): bool
-    {
+     */
+    public function get_usesphorphanedfiles(): bool {
         return $this->usesphorphanedfiles;
     }
 
@@ -135,9 +133,8 @@ class config_handler
      * Get the value of maxforsiteadmin
      *
      * @return  int
-     */ 
-    public function getMax_for_siteadmin(): int
-    {
-        return $this->max_for_siteadmin;
+     */
+    public function get_max_for_siteadmin(): int {
+        return $this->maxforsiteadmin;
     }
 }

@@ -23,6 +23,8 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+defined('MOODLE_INTERNAL') || die();
+
 $string['allcourses'] = 'Administrator:innen sehen alle Kurse';
 $string['blocktitle'] = 'Meine Kurse advanced';
 $string['blocktitlealt'] = 'nicht unterstützt';

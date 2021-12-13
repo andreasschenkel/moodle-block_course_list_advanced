@@ -22,10 +22,11 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die;
+defined('MOODLE_INTERNAL') || die();
 
 if ($ADMIN->fulltree) {
-    $options = array('all' => get_string('allcourses', 'block_course_list_advanced'), 'own' => get_string('owncourses', 'block_course_list_advanced'));
+    $options = array('all' => get_string('allcourses', 'block_course_list_advanced'),
+        'own' => get_string('owncourses', 'block_course_list_advanced'));
 
     $settings->add(new admin_setting_configselect(
         'block_course_list_advanced_adminview',
@@ -73,9 +74,9 @@ if ($ADMIN->fulltree) {
     $options = array(5 => '5', 10 => '10', 20 => '20', 30 => '30', 40 => '40', 50 => '50', 100 => '100', 10000 => '10000');
 
     $settings->add(new admin_setting_configselect(
-        'block_course_list_advanced_max_for_siteadmin',
-        get_string('max_for_siteadmin', 'block_course_list_advanced'),
-        get_string('configmax_for_siteadmin', 'block_course_list_advanced'),
+        'block_course_list_advanced_maxforsiteadmin',
+        get_string('maxforsiteadmin', 'block_course_list_advanced'),
+        get_string('configmaxforsiteadmin', 'block_course_list_advanced'),
         '30',
         $options
     ));
