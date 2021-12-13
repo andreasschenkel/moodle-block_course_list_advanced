@@ -48,8 +48,8 @@ $string['configisallowedonfrontpage'] = 'When activated it is allowed to add blo
 $string['isallowedonmypage'] = 'Allow to add block on the mypage';
 $string['configisallowedonmypage'] = 'When activated it is allowed to add block to mypage.';
 
-$string['max_for_siteadmin'] = 'Maximum number of courses in section all courses for siteadmins';
-$string['configmax_for_siteadmin'] = 'Maximum number of courses in section all courses for siteadmins';
+$string['maxforsiteadmin'] = 'Maximum number of courses in section all courses for siteadmins';
+$string['configmaxforsiteadmin'] = 'Maximum number of courses in section all courses for siteadmins';
 
 $string['course_list_advanced:view'] = 'Show block';
 $string['course_list_advanced:addinstance'] = 'Add a new courses block';
