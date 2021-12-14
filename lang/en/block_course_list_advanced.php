@@ -23,6 +23,8 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+defined('MOODLE_INTERNAL') || die();
+
 $string['allcourses'] = 'Admin user sees all courses';
 $string['blocktitle'] = 'Courses advanced';
 $string['blocktitlealt'] = 'not supported';
@@ -46,8 +48,8 @@ $string['configisallowedonfrontpage'] = 'When activated it is allowed to add blo
 $string['isallowedonmypage'] = 'Allow to add block on the mypage';
 $string['configisallowedonmypage'] = 'When activated it is allowed to add block to mypage.';
 
-$string['max_for_siteadmin'] = 'Maximum number of courses in section all courses for siteadmins';
-$string['configmax_for_siteadmin'] = 'Maximum number of courses in section all courses for siteadmins';
+$string['maxforsiteadmin'] = 'Maximum number of courses in section all courses for siteadmins';
+$string['configmaxforsiteadmin'] = 'Maximum number of courses in section all courses for siteadmins';
 
 $string['course_list_advanced:view'] = 'Show block';
 $string['course_list_advanced:addinstance'] = 'Add a new courses block';

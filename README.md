@@ -50,6 +50,11 @@ At the end of the block a list of all courses is shown where the usere is enroll
 
 
 # Changelog #
+
+## [[v2.0.5]] ##
+- changes to moodle coding styleguide 
+
+
 ## [[v2.0.4]] ##
 - configurable max courses if is_siteadmin
 

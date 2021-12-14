@@ -23,6 +23,8 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+defined('MOODLE_INTERNAL') || die();
+
 $string['allcourses'] = 'Administrator:innen sehen alle Kurse';
 $string['blocktitle'] = 'Meine Kurse advanced';
 $string['blocktitlealt'] = 'nicht unterstützt';
@@ -46,8 +48,8 @@ $string['configisallowedonfrontpage'] = 'Wenn aktiviert kann der Block auf der S
 $string['isallowedonmypage'] = 'Block auf my-Seite (Dashboard/Arbeitsplatz) erlauben';
 $string['configisallowedonmypage'] = 'Wenn aktiviert kann der Block auf der my-Seite hinzugefügt werden (wenn Berechtigung vorhanden).';
 
-$string['max_for_siteadmin'] = 'Maximale Kursanzahl im Abschnitt Alle Kurse für Siteadmins';
-$string['configmax_for_siteadmin'] = 'Für SiteAdmins werden nur maximal so viele Kurse im Abschnitt AlleKurse angezeigt.';
+$string['maxforsiteadmin'] = 'Maximale Kursanzahl im Abschnitt Alle Kurse für Siteadmins';
+$string['configmaxforsiteadmin'] = 'Für SiteAdmins werden nur maximal so viele Kurse im Abschnitt AlleKurse angezeigt.';
 
 $string['course_list_advanced:view'] = 'Block anzeigen';
 $string['course_list_advanced:addinstance'] = 'Block Kursliste erweitert hinzufügen';
