@@ -30,6 +30,8 @@ $string['blocktitle'] = 'Meine Kurse advanced';
 $string['blocktitlealt'] = 'nicht unterstützt';
 $string['blockfooteralt'] = 'Inhalt wird nur in einem Kurs für Trainer:innen angezeigt';
 
+$string['course_list_advanced:viewContent'] = 'Berechtigung, die Inhalte im Block zu sehen';
+
 $string['adminview'] = 'Adminansicht';
 $string['configadminview'] = 'Alle Kurse anzeigen oder nur Kurse, in die Administratorin oder Administatorin mit einer Rolle eingeschrieben ist.';
 
