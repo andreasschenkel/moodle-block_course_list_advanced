@@ -186,7 +186,7 @@ class block_course_list_advanced extends block_list
                     $linkvieworphanedfiles = '';
                     if ($confighandler->get_usesphorphanedfiles()) {
                         $orphanedfileslink = new moodle_url('/report/sphorphanedfiles/index.php', array('id' => $course->id));
-                        $linkvieworphanedfiles = '<a href="' . $orphanedfileslink . '">  ' . $iconorphanedfileslink . '</a>';
+                        $linkvieworphanedfiles = '<a href="' . $orphanedfileslink . '"   target="_blank">  ' . $iconorphanedfileslink . '</a>';
                     }
 
                     if ($iseditingteacher) {
