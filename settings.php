@@ -72,7 +72,6 @@ if ($ADMIN->fulltree) {
     ));
 
     $options = array(5 => '5', 10 => '10', 20 => '20', 30 => '30', 40 => '40', 50 => '50', 100 => '100', 10000 => '10000');
-
     $settings->add(new admin_setting_configselect(
         'block_course_list_advanced_maxforsiteadmin',
         get_string('maxforsiteadmin', 'block_course_list_advanced'),
@@ -81,5 +80,11 @@ if ($ADMIN->fulltree) {
         $options
     ));
 
+    $settings->add(new admin_setting_configcheckbox(
+        'block_course_list_advanced_showcourseswithguestrole',
+        get_string('showcourseswithguestrole', 'block_course_list_advanced'),
+        get_string('configshowcourseswithguestrole', 'block_course_list_advanced'),
+        0
+    ));
 
 }

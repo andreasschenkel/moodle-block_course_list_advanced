@@ -30,6 +30,8 @@ $string['blocktitle'] = 'Meine Kurse advanced';
 $string['blocktitlealt'] = 'nicht unterstützt';
 $string['blockfooteralt'] = 'Inhalt wird nur in einem Kurs für Trainer:innen angezeigt';
 
+$string['course_list_advanced:viewcontent'] = 'Berechtigung, die Inhalte im Block zu sehen';
+
 $string['adminview'] = 'Adminansicht';
 $string['configadminview'] = 'Alle Kurse anzeigen oder nur Kurse, in die Administratorin oder Administatorin mit einer Rolle eingeschrieben ist.';
 
@@ -58,10 +60,11 @@ $string['course_list_advanced:myaddinstance'] = 'Block Kursliste erweitert zum A
 $string['owncourses'] = 'Admin sieht eigene Kurse';
 $string['pluginname'] = 'Kursliste erweitert';
 $string['privacy:metadata'] = 'Der Block Kursliste erweitert zeigt nur Daten über Kurse an und speichert keine Daten.';
-$string['headlineteacher'] = '<b>Kurs(e) - Lehrende</b>';
-$string['headlinestudent'] = '<b>Kurs(e) - Teilnehmer</b>';
-$string['headlinenoneditingteacher'] = '<b>Kurs(e) - Lehrende o Bearbeitung</b>';
-$string['headlinenallcourses'] = '<b>Kurs(e) - Alle</b>';
+$string['headlineteacher'] = 'Kurs(e) - Lehrende';
+$string['headlinestudent'] = 'Kurs(e) - Teilnehmer';
+$string['headlinenoneditingteacher'] = 'Kurs(e) - Lehrende o Bearbeitung';
+$string['headlineguest'] = 'Kurs(e) - Gast';
+$string['headlinenallcourses'] = 'Kurs(e) - Alle';
 
 $string['noenddate'] = 'offen';
 
@@ -70,3 +73,6 @@ $string['tooltipptextstudentindicator'] = 'S';
 $string['tooltipptexteditingteacher'] = 'Trainer: capability moodle/course:manageactivities';
 $string['tooltipptexteditingteacherindicator'] = 'T';
 $string['tooltipptextsphorphanedfiles'] = 'Bericht über verwaiste Dateien';
+
+$string['showcourseswithguestrole'] = 'Guestrole';
+$string['configshowcourseswithguestrole'] = 'When activated a section with courses a user is enroled as guest is shown.';

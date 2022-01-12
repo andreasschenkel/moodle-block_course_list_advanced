@@ -51,6 +51,13 @@ At the end of the block a list of all courses is shown where the usere is enroll
 
 # Changelog #
 
+## [[v2.0.6]] ## 12.1.2021
+
+- added languagestring for capability
+- added section with courses where user is enroled with role guest
+- setting to activate section with courses where enroled as guest
+- codeingstyle
+
 ## [[v2.0.5]] ##
 - changes to moodle coding styleguide 
 

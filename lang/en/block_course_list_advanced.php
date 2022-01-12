@@ -30,6 +30,8 @@ $string['blocktitle'] = 'Courses advanced';
 $string['blocktitlealt'] = 'not supported';
 $string['blockfooteralt'] = 'Content only supported in a course where user is trainer';
 
+$string['course_list_advanced:viewcontent'] = 'capability to view the content in this block';
+
 $string['adminview'] = 'Admin view';
 $string['configadminview'] = 'Whether to display all courses in the Courses advanced block, or only courses that the admin is enrolled in.';
 
@@ -58,10 +60,11 @@ $string['course_list_advanced:myaddinstance'] = 'Add a new courses block to Dash
 $string['owncourses'] = 'Admin user sees own courses';
 $string['pluginname'] = 'Courses advanced';
 $string['privacy:metadata'] = 'The Courses block only shows data about courses and does not store any data itself.';
-$string['headlineteacher'] = '<b>Course(s) - trainer</b>';
-$string['headlinestudent'] = '<b>Course(s) - student</b>';
-$string['headlinenoneditingteacher'] = '<b>Course(s) - trainer nonediting</b>';
-$string['headlinenallcourses'] = '<b>Course(s) - all</b>';
+$string['headlineteacher'] = 'Course(s) - trainer';
+$string['headlinestudent'] = 'Course(s) - student';
+$string['headlinenoneditingteacher'] = 'Course(s) - trainer nonediting';
+$string['headlineguest'] = 'Course(s) - guest';
+$string['headlinenallcourses'] = 'Course(s) - all';
 
 $string['noenddate'] = 'open';
 
@@ -70,3 +73,6 @@ $string['tooltipptextstudentindicator'] = 'S';
 $string['tooltipptexteditingteacher'] = 'editingteacher: capability moodle/course:manageactivities';
 $string['tooltipptexteditingteacherindicator'] = 'T';
 $string['tooltipptextsphorphanedfiles'] = 'Report orphened files';
+
+$string['showcourseswithguestrole'] = 'Guestrole';
+$string['configshowcourseswithguestrole'] = 'When activated a section with courses a user is enroled as guest is shown.';
