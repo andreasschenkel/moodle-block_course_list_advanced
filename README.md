@@ -51,6 +51,12 @@ At the end of the block a list of all courses is shown where the usere is enroll
 
 # Changelog #
 
+
+## [[v2.0.7]] ##
+- added releaseinformation in version.php 
+- add first alpha version of htmlHelper to reduce codeinglines
+- fix: duplicate entry problem with capability viewcontent -->  viewblockcontent
+
 ## [[v2.0.6]] ## 12.1.2021
 
 - added languagestring for capability

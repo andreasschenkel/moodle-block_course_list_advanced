@@ -26,11 +26,11 @@
 defined('MOODLE_INTERNAL') || die();
 
 $string['allcourses'] = 'Administrator:innen sehen alle Kurse';
-$string['blocktitle'] = 'Meine Kurse advanced';
+$string['blocktitle'] = 'Meine Kurse und Rollen';
 $string['blocktitlealt'] = 'nicht unterstützt';
 $string['blockfooteralt'] = 'Inhalt wird nur in einem Kurs für Trainer:innen angezeigt';
 
-$string['course_list_advanced:viewcontent'] = 'Berechtigung, die Inhalte im Block zu sehen';
+$string['course_list_advanced:viewblockcontent'] = 'Berechtigung, die Inhalte im Block zu sehen';
 
 $string['adminview'] = 'Adminansicht';
 $string['configadminview'] = 'Alle Kurse anzeigen oder nur Kurse, in die Administratorin oder Administatorin mit einer Rolle eingeschrieben ist.';
