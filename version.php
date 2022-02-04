@@ -25,6 +25,7 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2022011200;
+$plugin->version   = 2022020400;
 $plugin->requires  = 2020060900;
 $plugin->component = 'block_course_list_advanced';
+$plugin->release   = 'v2.0.7';

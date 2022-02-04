@@ -61,7 +61,7 @@ $capabilities = array(
         )
     ),
 
-    'block/course_list_advanced:viewcontent' => array(
+    'block/course_list_advanced:viewblockcontent' => array(
         'riskbitmask' => RISK_SPAM | RISK_XSS,
 
         'captype' => 'write',

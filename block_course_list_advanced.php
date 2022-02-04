@@ -28,6 +28,7 @@ defined('MOODLE_INTERNAL') || die();
 require_once($CFG->dirroot . '/course/lib.php');
 
 use block_course_list_advanced\confighandler;
+use block_course_list_advanced\htmlhelper;
 
 class block_course_list_advanced extends block_list
 {
@@ -56,7 +57,7 @@ class block_course_list_advanced extends block_list
         // If not BOTH privileges then do not show content for performancereason. must be allowed to see course AND must be trainer.
         $isallowedtoseecontent = false;
         $isallowedtoseecontent = (has_capability('block/course_list_advanced:view', $this->context)
-            && has_capability('block/course_list_advanced:viewcontent', $this->context));
+            && has_capability('block/course_list_advanced:viewblockcontent', $this->context));
         if (!$isallowedtoseecontent) {
             $this->title = get_string('blocktitlealt', 'block_course_list_advanced');
             $this->content->footer = get_string('blockfooteralt', 'block_course_list_advanced');
@@ -171,7 +172,6 @@ class block_course_list_advanced extends block_list
                             . '  <i class="text-info" data-toggle="tooltip" data-placement="right" title="Guest" ><font color="#888800">G</font></i>';
                     }
 
-
                     $duration = $startdate . ' - ' . $enddate;
 
                     $htmllinktocourse = "<a $linkcss title=\""
@@ -248,49 +248,33 @@ class block_course_list_advanced extends block_list
                         . "</a> ...";
                 }
             }
+
+            // TODO: closing the div from class row???
+            $blockrow = '<div class="row">';
             if ($countcourseseditingteacher) {
-                $this->content->items[] = '<div class="headlineteacher">'
-                    . $countcourseseditingteacher
-                    . ' '
-                    . get_string('headlineteacher', 'block_course_list_advanced')
-                    . '</div>';
-                $this->content->items[] = $listalltrainercourses . ' <br />';
+                $blockrow = $blockrow . htmlhelper::generate_role_block($countcourseseditingteacher, "headlineteacher", $listalltrainercourses, "");
             }
             if ($countcourseswithstudent) {
-                $this->content->items[] = '<div class="headlinestudent">'
-                    .  $countcourseswithstudent
-                    . ' '
-                    . get_string('headlinestudent', 'block_course_list_advanced')
-                    . '</div>';
-                $this->content->items[] = $listallstudentcourses . '<br />';
+                $blockrow = $blockrow . htmlhelper::generate_role_block($countcourseswithstudent, "headlinestudent", $listallstudentcourses, "");       
             }
             if ($countcoursesnoneditingteacher) {
-                $this->content->items[] = '<div class="headlinenoneditingteacher">'
-                    .  $countcoursesnoneditingteacher
-                    . ' '
-                    . get_string('headlinenoneditingteacher', 'block_course_list_advanced')
-                    . '</div>';
-                $this->content->items[] = $listallnoneditingteachercourses . '<br />';
+                $blockrow = $blockrow . htmlhelper::generate_role_block($countcoursesnoneditingteacher, "headlinenoneditingteacher", $listallnoneditingteachercourses, "");       
             }
-
             if ($countcourseswithguest && $showcourseswithguestrole) {
-                $this->content->items[] = '<div class="headlineguest">'
-                    .  $countcourseswithguest
-                    . ' '
-                    . get_string('headlineguest', 'block_course_list_advanced')
-                    . '</div>';
-                $this->content->items[] = $listallguestcourses . '<br />';
+                $blockrow = $blockrow . htmlhelper::generate_role_block($countcourseswithguest, "headlineguest", $listallguestcourses, "");       
             }
+            // siteadmins can view all courses
+            if (is_siteadmin() && $countcoursesall) {
+                $max = '';
+                $max = $confighandler->get_max_for_siteadmin() ;
+                $blockrow = $blockrow . htmlhelper::generate_role_block($countcoursesall, "headlinenallcourses", $listallcourses, " (max.  $max )");       
+                $this->content->items[] = $blockrow;
+            }
+            
 
-            if ($countcoursesall) {
-                $this->content->items[] = '<div class="headlinenallcourses">'
-                    .  $countcoursesall . ' '
-                    . get_string('headlinenallcourses', 'block_course_list_advanced')
-                    . ' (max. '
-                    . $confighandler->get_max_for_siteadmin()
-                    . ')</div>';
-                $this->content->items[] = $listallcourses . '<br />';
-            }
+
+
+
 
             $this->get_remote_courses();
             if ($this->content->items) {
@@ -454,7 +438,7 @@ class block_course_list_advanced extends block_list
     }
 
     /**
-     * @var $color string like #ff0000
+     * @param string $color like #ff0000
      * @return string indicator for the role as html-code
      */
     public function createroleindicator($title, $shortcut, $color): string {
@@ -466,9 +450,9 @@ class block_course_list_advanced extends block_list
     }
 
     /**
-     * @var  $USER  
-     * @var  $roleid  
-     * @var  $context  
+     * @param string $USER  
+     * @param string $roleid  
+     * @param string $context  
      * @return bool true, if $user is has role with $roleid in $context
      */
     public function has_user_role_with_roleid_in_context($USER, $roleid, $context): bool {

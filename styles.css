@@ -21,15 +21,19 @@
 }
 
 .block_course_list_advanced .coursecssactiv {
-    margin-bottom: 10px;
+    margin-bottom: 0;
     padding-left: 2px;
     border-left: solid 5px rgb(5, 148, 60);
+    border-bottom: solid 1px #ccc;
+    border-right: solid 1px #ccc;
 }
 
 .block_course_list_advanced .coursecssfinished {
-    margin-bottom: 10px;
+    margin-bottom: 0;
     padding-left: 2px;
     border-left: solid 5px rgb(155, 13, 13);
+    border-bottom: solid 1px #ccc;
+    border-right: solid 1px #ccc;
 }
 
 .block_course_list_advanced .dimmed .coursecssfinished {
@@ -37,9 +41,11 @@
 }
 
 .block_course_list_advanced .coursecssfuture {
-    margin-bottom: 10px;
+    margin-bottom: 0;
     padding-left: 2px;
     border-left: solid 5px rgb(58, 132, 241);
+    border-bottom: solid 1px #ccc;
+    border-right: solid 1px #ccc;
 }
 
 .block_course_list_advanced .headlineteacher,
@@ -50,4 +56,11 @@
     padding: 10px;
     border: solid 1px #bbb;
     background-color: #ddd;
+}
+
+.block_course_list_advanced .roleblock {
+    margin: 15px;
+    width: 100%;
+    max-width: 365px;
+    box-shadow: 0 0 0 #bbb;
 }
