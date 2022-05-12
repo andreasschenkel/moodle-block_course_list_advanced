@@ -50,6 +50,10 @@ At the end of the block a list of all courses is shown where the usere is enroll
 
 
 # Changelog #
+## [[v2.0.8]] ##
+- fixed problem with width during editing is active
+- fixed issue #7: Hard-coded title attribute values #7
+
 
 
 ## [[v2.0.7]] ##

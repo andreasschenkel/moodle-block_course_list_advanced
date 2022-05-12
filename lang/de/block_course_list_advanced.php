@@ -72,6 +72,11 @@ $string['tooltipptextstudent'] = 'Schüler:in (reviewmyattempts)';
 $string['tooltipptextstudentindicator'] = 'S';
 $string['tooltipptexteditingteacher'] = 'Trainer: capability moodle/course:manageactivities';
 $string['tooltipptexteditingteacherindicator'] = 'T';
+$string['tooltipptextnoneditingteacher'] = 'Trainer ohne Bearbeitungsrechte: changecategory';
+$string['tooltipptextnoneditingteacherindicator'] = 'T2';
+$string['tooltipptextguest'] = 'Gast';
+$string['tooltipptextguestindicator'] = 'G';
+
 $string['tooltipptextsphorphanedfiles'] = 'Bericht über verwaiste Dateien';
 
 $string['showcourseswithguestrole'] = 'Guestrole';
