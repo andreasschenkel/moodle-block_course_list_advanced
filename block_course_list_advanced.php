@@ -59,9 +59,8 @@ class block_course_list_advanced extends block_list
         $isallowedtoseecontent = (has_capability('block/course_list_advanced:view', $this->context)
             && has_capability('block/course_list_advanced:viewblockcontent', $this->context));
         if (!$isallowedtoseecontent) {
-            $this->title = get_string('blocktitlealt', 'block_course_list_advanced');
-            $this->content->footer = get_string('blockfooteralt', 'block_course_list_advanced');
-            return $this->content;
+            // ToDo: is this correct to return null??? not very nice code!!!
+            return null;
         }
 
         $icon = $OUTPUT->pix_icon('i/course', get_string('course'));
@@ -150,7 +149,7 @@ class block_course_list_advanced extends block_list
                         $roles = $roles . " " . $this->createroleindicator(
                             get_string('tooltipptexteditingteacher', 'block_course_list_advanced'),
                             get_string('tooltipptexteditingteacherindicator', 'block_course_list_advanced'),
-                            'ff0000'
+                            '#ff0000'
                         );
                     }
 
@@ -158,18 +157,24 @@ class block_course_list_advanced extends block_list
                         $roles = $roles . " " . $this->createroleindicator(
                             get_string('tooltipptextstudent', 'block_course_list_advanced'),
                             get_string('tooltipptextstudentindicator', 'block_course_list_advanced'),
-                            '0000ff'
+                            '#0000ff'
                         );
                     }
 
                     if ($is_noneditingteacher) {
-                        $roles = $roles
-                            . '  <i class="text-info" data-toggle="tooltip" data-placement="right" title="nonediting Teacher (changecategory)" ><font color="green">T</font></i>';
+                        $roles = $roles . " " . $this->createroleindicator(
+                            get_string('tooltipptextnoneditingteacher', 'block_course_list_advanced'),
+                            get_string('tooltipptextnoneditingteacherindicator', 'block_course_list_advanced'),
+                            '#ab281b'
+                        );
                     }
 
                     if ($is_guest && $showcourseswithguestrole) {
-                        $roles = $roles
-                            . '  <i class="text-info" data-toggle="tooltip" data-placement="right" title="Guest" ><font color="#888800">G</font></i>';
+                        $roles = $roles . " " . $this->createroleindicator(
+                            get_string('tooltipptextguest', 'block_course_list_advanced'),
+                            get_string('tooltipptextguestindicator', 'block_course_list_advanced'),
+                            '#888800'
+                        );
                     }
 
                     $duration = $startdate . ' - ' . $enddate;
@@ -235,17 +240,10 @@ class block_course_list_advanced extends block_list
                     }
                 }
 
-                $title = '';
-                $title = get_string('blocktitle', 'block_course_list_advanced');
-                if (is_siteadmin()) {
-                    $title = $title . " (Siteadmin)";
-                }
-                $this->title = $title;
+                $this->title = get_string('blocktitle', 'block_course_list_advanced');
                 // If we can update any course of the view all isn't hidden, show the view all courses link.
                 if ($allcourselink) {
-                    $this->content->footer = "<a href=\"$CFG->wwwroot/course/index.php\">"
-                        . get_string("fulllistofcourses")
-                        . "</a> ...";
+                    $this->content->footer = "<a href=\"$CFG->wwwroot/course/index.php\">" . get_string("fulllistofcourses") . "</a>";
                 }
             }
 
@@ -264,18 +262,17 @@ class block_course_list_advanced extends block_list
                 $blockrow = $blockrow . htmlhelper::generate_role_block($countcourseswithguest, "headlineguest", $listallguestcourses, "");       
             }
             // siteadmins can view all courses
+            // append a table with the list of all courses in moodle up to th maximum number of courses that are allowed
             if (is_siteadmin() && $countcoursesall) {
                 $max = '';
                 $max = $confighandler->get_max_for_siteadmin() ;
                 $blockrow = $blockrow . htmlhelper::generate_role_block($countcoursesall, "headlinenallcourses", $listallcourses, " (max.  $max )");       
-                $this->content->items[] = $blockrow;
             }
-            
 
-
-
-
-
+            if ( $blockrow == '<div class="row">') {
+                $blockrow = ' you are not enroled in any course';
+            }
+            $this->content->items[] = $blockrow;
             $this->get_remote_courses();
             if ($this->content->items) {
                 // Make sure we don't return an empty list.
@@ -298,7 +295,7 @@ class block_course_list_advanced extends block_list
                 }
                 // If we can update any course of the view all isn't hidden, show the view all courses link.
                 if ($allcourselink) {
-                    $this->content->footer .= "<a href=\"$CFG->wwwroot/course/index.php\">" . get_string('fulllistofcourses') . '</a> ...';
+                    $this->content->footer .= "<a href=\"$CFG->wwwroot/course/index.php\">" . get_string('fulllistofcourses') . '</a>';
                 }
                 $this->title = get_string('categories');
             } else {
@@ -318,14 +315,14 @@ class block_course_list_advanced extends block_list
                     }
                     // If we can update any course of the view all isn't hidden, show the view all courses link.
                     if ($allcourselink) {
-                        $this->content->footer .= "<a href=\"$CFG->wwwroot/course/index.php\">" . get_string('fulllistofcourses') . '</a> ...';
+                        $this->content->footer .= "<a href=\"$CFG->wwwroot/course/index.php\">" . get_string('fulllistofcourses') . '</a>';
                     }
                     $this->get_remote_courses();
                 } else {
                     $this->content->icons[] = '';
                     $this->content->items[] = get_string('nocoursesyet');
                     if (has_capability('moodle/course:create', context_coursecat::instance($category->id))) {
-                        $this->content->footer = '<a href="' . $CFG->wwwroot . '/course/edit.php?category=' . $category->id . '">' . get_string("addnewcourse") . '</a> ...';
+                        $this->content->footer = '<a href="' . $CFG->wwwroot . '/course/edit.php?category=' . $category->id . '">' . get_string("addnewcourse") . '</a>';
                     }
                     $this->get_remote_courses();
                 }
@@ -464,6 +461,4 @@ class block_course_list_advanced extends block_list
         }
         return false;
     }
-
-
 }

@@ -72,6 +72,11 @@ $string['tooltipptextstudent'] = 'student (reviewmyattempts)';
 $string['tooltipptextstudentindicator'] = 'S';
 $string['tooltipptexteditingteacher'] = 'editingteacher: capability moodle/course:manageactivities';
 $string['tooltipptexteditingteacherindicator'] = 'T';
+$string['tooltipptextnoneditingteacher'] = 'nonediting Teacher: changecategory';
+$string['tooltipptextnoneditingteacherindicator'] = 'nT';
+$string['tooltipptextguest'] = 'guest';
+$string['tooltipptextguestindicator'] = 'G';
+
 $string['tooltipptextsphorphanedfiles'] = 'Report orphened files';
 
 $string['showcourseswithguestrole'] = 'Guestrole';
