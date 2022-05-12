@@ -72,10 +72,8 @@ $string['tooltipptextstudent'] = 'Schüler:in (reviewmyattempts)';
 $string['tooltipptextstudentindicator'] = 'S';
 $string['tooltipptexteditingteacher'] = 'Trainer: capability moodle/course:manageactivities';
 $string['tooltipptexteditingteacherindicator'] = 'T';
-
-$string['tooltipptextnoneditingteacher'] = 'Teacher ohne Bearbeitungsrechte: changecategory';
+$string['tooltipptextnoneditingteacher'] = 'Trainer ohne Bearbeitungsrechte: changecategory';
 $string['tooltipptextnoneditingteacherindicator'] = 'T2';
-
 $string['tooltipptextguest'] = 'Gast';
 $string['tooltipptextguestindicator'] = 'G';
 

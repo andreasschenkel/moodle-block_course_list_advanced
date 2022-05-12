@@ -149,7 +149,7 @@ class block_course_list_advanced extends block_list
                         $roles = $roles . " " . $this->createroleindicator(
                             get_string('tooltipptexteditingteacher', 'block_course_list_advanced'),
                             get_string('tooltipptexteditingteacherindicator', 'block_course_list_advanced'),
-                            'ff0000'
+                            '#ff0000'
                         );
                     }
 
@@ -157,7 +157,7 @@ class block_course_list_advanced extends block_list
                         $roles = $roles . " " . $this->createroleindicator(
                             get_string('tooltipptextstudent', 'block_course_list_advanced'),
                             get_string('tooltipptextstudentindicator', 'block_course_list_advanced'),
-                            '0000ff'
+                            '#0000ff'
                         );
                     }
 
@@ -165,7 +165,7 @@ class block_course_list_advanced extends block_list
                         $roles = $roles . " " . $this->createroleindicator(
                             get_string('tooltipptextnoneditingteacher', 'block_course_list_advanced'),
                             get_string('tooltipptextnoneditingteacherindicator', 'block_course_list_advanced'),
-                            '#ffff00'
+                            '#ab281b'
                         );
                     }
 
