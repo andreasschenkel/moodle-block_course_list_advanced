@@ -1,4 +1,6 @@
+(deprecated plugin!!!)
 # moodle-block_course_list_advanced
+This plugin will get no updates anymore. Instead you might use https://github.com/andreasschenkel/moodle-block_overviewmyrolesincourses 
 The normal block course list shows all courses and has no information about the role in the course.
 
 The block moodle-block_course_list_advanced adds some more information about a course. I adds the information which of the following roles a user is enrolled into a course.
